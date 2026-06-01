@@ -1,0 +1,1322 @@
+/* ================================================================
+   style.css — Beauty Academy Daniela Quesada
+   Laboratorio #1 — ISW-521 Programación en Ambiente Web I
+   
+   ESTRUCTURA DE ESTE ARCHIVO:
+   1. Variables CSS (colores, tipografía, espaciado)
+   2. Reset y estilos base
+   3. Tipografía
+   4. Utilidades
+   5. Header & Nav (Flexbox)
+   6. Hero
+   7. Secciones compartidas
+   8. Sobre Mí (Grid)
+   9. Procedimientos / Tarjetas (Grid)
+   10. Banner CTA
+   11. Cursos (Flexbox)
+   12. Galería (Grid)
+   13. Contacto (Grid)
+   14. Footer (Flexbox)
+   15. Animaciones
+   16. Media Queries (breakpoints responsivos)
+   17. Modo oscuro
+================================================================ */
+
+
+/* ================================================================
+   1. VARIABLES CSS
+   Centraliza todos los colores y valores repetidos.
+   Cambiar aquí afecta toda la página automáticamente.
+================================================================ */
+:root {
+  /* — Paleta de colores (tema claro) — */
+  --color-rose:       #e8a4b8;   /* Rosa principal de la academia */
+  --color-rose-dark:  #c77d96;   /* Rosa más oscuro para hover */
+  --color-rose-light: #fce4ec;   /* Rosa muy suave para fondos */
+  --color-gold:       #c9a84c;   /* Dorado para acentos y precios */
+  --color-gold-light: #f0d080;   /* Dorado claro */
+  --color-white:      #ffffff;
+  --color-off-white:  #fdf8f9;   /* Blanco cálido para fondos alternos */
+  --color-dark:       #2d1f25;   /* Marrón muy oscuro (texto principal) */
+  --color-gray:       #6b5b62;   /* Gris-rosado para texto secundario */
+  --color-gray-light: #e8dde0;   /* Gris claro para bordes */
+  --color-darker-pink: #AA336A; /* Rosa más oscuro para contraste fuerte */
+
+  /* — Colores de fondo de las secciones — */
+  --bg-primary:   var(--color-white);
+  --bg-secondary: var(--color-off-white);
+  --bg-dark:      var(--color-dark);
+
+  /* — Texto — */
+  --text-primary:   var(--color-dark);
+  --text-secondary: var(--color-gray);
+  --text-on-dark:   var(--color-white);
+
+  /* — Tipografía — */
+  --font-display: 'Cormorant Garamond', Georgia, serif;  /* Títulos elegantes */
+  --font-body:    'Lato', Arial, sans-serif;              /* Texto de cuerpo */
+
+  /* — Tamaños de fuente — */
+  --fs-xs:   0.75rem;   /* 12px */
+  --fs-sm:   0.875rem;  /* 14px */
+  --fs-base: 1rem;      /* 16px */
+  --fs-md:   1.125rem;  /* 18px */
+  --fs-lg:   1.5rem;    /* 24px */
+  --fs-xl:   2rem;      /* 32px */
+  --fs-2xl:  2.75rem;   /* 44px */
+  --fs-3xl:  4rem;      /* 64px */
+
+  /* — Espaciado — */
+  --space-xs:  0.5rem;
+  --space-sm:  1rem;
+  --space-md:  1.5rem;
+  --space-lg:  3rem;
+  --space-xl:  5rem;
+  --space-2xl: 7rem;
+
+  /* — Radio de bordes — */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+
+  /* — Sombras — */
+  --shadow-sm: 0 2px 8px rgba(45, 31, 37, 0.08);
+  --shadow-md: 0 4px 20px rgba(45, 31, 37, 0.12);
+  --shadow-lg: 0 8px 40px rgba(45, 31, 37, 0.16);
+
+  /* — Transición por defecto — */
+  --transition: 0.3s ease;
+
+  /* — Imagen de fondo del Hero —
+     PARA CAMBIAR EL FONDO DEL HERO: actualiza esta variable con la ruta de tu imagen */
+  --hero-bg: url('../img/header2.webp');
+
+  /* — Altura del navbar (usada para offset del scroll) — */
+  --navbar-h: 70px;
+}
+
+
+/* ================================================================
+   2. RESET Y ESTILOS BASE
+   Elimina estilos predeterminados del navegador para empezar limpio.
+================================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;  /* El padding y border no suman al ancho total */
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  /* scroll-behavior: smooth ya no se necesita aquí porque lo hacemos con JS,
+     pero se puede dejar como fallback */
+  scroll-behavior: smooth;
+  /* Compensa la altura del navbar fijo al anclar con #id */
+  scroll-padding-top: var(--navbar-h);
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: 1.7;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  /* Evita scroll horizontal accidental */
+  overflow-x: hidden;
+}
+
+img {
+  /* Las imágenes no desbordan su contenedor */
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--color-rose-dark);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+a:hover {
+  color: var(--color-gold);
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  background: none;
+}
+
+
+
+/* ================================================================
+   3. TIPOGRAFÍA
+================================================================ */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+h1 { font-size: clamp(var(--fs-2xl), 5vw, var(--fs-3xl)); }
+h2 { font-size: clamp(var(--fs-xl), 3vw, var(--fs-2xl)); }
+h3 { font-size: clamp(var(--fs-lg), 2vw, var(--fs-xl)); }
+
+p { margin-bottom: var(--space-sm); }
+p:last-child { margin-bottom: 0; }
+
+
+/* ================================================================
+   4. UTILIDADES
+================================================================ */
+.container {
+  /* Limita el ancho máximo y centra el contenido */
+  max-width: 1100px;
+  margin-inline: auto;  /* shorthand moderno para margin-left + margin-right */
+  padding-inline: var(--space-md);
+}
+
+.text-center { text-align: center; }
+
+/* Etiqueta pequeña que va encima de los títulos de sección */
+.section-tag {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-rose-dark);
+  margin-bottom: var(--space-xs);
+}
+
+.section-title {
+  margin-bottom: var(--space-sm);
+}
+
+.section-subtitle {
+  font-size: var(--fs-md);
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin-inline: auto;
+  margin-bottom: var(--space-lg);
+}
+
+/* Clases de botones reutilizables */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.75rem;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: all var(--transition);
+  cursor: pointer;
+  /* Foco visible para accesibilidad con teclado */
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+/* Botón principal rosa */
+.btn-primary {
+  background-color: var(--color-rose-dark);
+  color: var(--color-white);
+  border: 2px solid var(--color-rose-dark);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-dark);
+  border-color: var(--color-dark);
+  color: var(--color-white);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Botón contorno */
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-white);
+  border: 2px solid var(--color-white);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-white);
+  color: var(--color-dark);
+}
+
+/* Botón dorado */
+.btn-gold {
+  background-color: var(--color-gold);
+  color: var(--color-dark);
+  border: 2px solid var(--color-gold);
+  font-weight: 700;
+}
+
+.btn-gold:hover {
+  background-color: var(--color-gold-light);
+  border-color: var(--color-gold-light);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Tamaño pequeño de botón */
+.btn-sm {
+  padding: 0.5rem 1.25rem;
+  font-size: var(--fs-xs);
+}
+
+/* Botón que ocupa todo el ancho */
+.btn-full { width: 100%; text-align: center; }
+
+/* Placeholder para imágenes que no cargaron */
+.img-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  background: linear-gradient(135deg, var(--color-rose-light), var(--color-gray-light));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: var(--color-rose-dark);
+  border-radius: var(--radius-md);
+}
+
+.placeholder-bg {
+  background: linear-gradient(135deg, var(--color-rose-light), var(--color-gray-light));
+  min-height: 200px;
+}
+
+
+/* ================================================================
+   5. HEADER & NAV — FLEXBOX
+   La navbar usa Flexbox para alinear logo, enlaces y botón de tema.
+================================================================ */
+#site-header {
+  position: fixed;           /* Fija la barra al tope de la pantalla */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--navbar-h);
+  z-index: 1000;             /* Por encima de todo el contenido */
+  background-color: rgba(1, 1, 1, 0.15);
+  backdrop-filter: blur(8px); /* Efecto de desenfoque de vidrio */
+  box-shadow: var(--shadow-sm);
+  transition: background-color var(--transition), box-shadow var(--transition);
+}
+
+/* Clase que se añade con JS al hacer scroll hacia abajo */
+#site-header.scrolled {
+  box-shadow: var(--shadow-md);
+}
+
+.navbar {
+  /* Flexbox: logo a la izquierda, nav a la derecha, alineados verticalmente */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  max-width: 1100px;
+  margin-inline: auto;
+  padding-inline: var(--space-md);
+}
+
+/* Logo */
+
+.logo img {
+    
+    width: 200px;
+    height: 200px;
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.8));
+}
+
+/* Menú de navegación — Flexbox */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.nav-link {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--color-rose-light);
+  position: relative;
+  padding-bottom: 4px;
+}
+
+/* Subrayado animado al hacer hover */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: var(--color-rose-dark);
+  transition: width var(--transition);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+.nav-link:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* Botón de cambio de tema */
+.btn-theme {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid var(--color-gray-light);
+  background: var(--bg-secondary);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+}
+
+.btn-theme:hover {
+  border-color: var(--color-rose-dark);
+  transform: scale(1.1);
+}
+
+.btn-theme:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+/* Botón hamburguesa — visible solo en móvil */
+.nav-toggle {
+  display: none;          /* Oculto en desktop */
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.hamburger-line {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-dark);
+  border-radius: 2px;
+  transition: all var(--transition);
+}
+
+/* Animación de la X al abrir el menú (JS añade clase 'open') */
+.nav-toggle.open .hamburger-line:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.nav-toggle.open .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle.open .hamburger-line:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+.nav-toggle:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 4px;
+}
+
+
+/* ================================================================
+   6. HERO
+   Sección de bienvenida a pantalla completa con imagen de fondo.
+================================================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /* La imagen de fondo se controla desde la variable --hero-bg */
+  background-image: var(--hero-bg),
+    linear-gradient(135deg, var(--color-rose-dark) 0%, var(--color-dark) 100%);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Efecto parallax sutil */
+  padding-top: var(--navbar-h);
+}
+
+/* Capa oscura semitransparente sobre el fondo para mejorar legibilidad */
+.hero-overlay {
+  position: absolute;
+  inset: 0;  /* shorthand: top:0; right:0; bottom:0; left:0 */
+  background: linear-gradient(
+    180deg,
+    rgba(45, 31, 37, 0.5) 0%,
+    rgba(45, 31, 37, 0.7) 100%
+  );
+}
+
+.hero-content {
+  position: relative; /* Por encima del overlay */
+  z-index: 1;
+  max-width: 750px;
+  padding: var(--space-lg) var(--space-md);
+}
+
+/* Etiqueta de logro en el hero */
+.hero-badge {
+  display: inline-block;
+  background-color: var(--color-gold);
+  color: var(--color-dark);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.4rem 1.2rem;
+  border-radius: var(--radius-pill);
+  margin-bottom: var(--space-md);
+  animation: fadeInDown 0.8s ease both;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  color: var(--color-white);
+  margin-bottom: var(--space-sm);
+  animation: fadeInUp 0.8s ease 0.2s both;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--color-rose);
+}
+
+.hero-subtitle {
+  font-size: var(--fs-md);
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-lg);
+  animation: fadeInUp 0.8s ease 0.4s both;
+}
+
+/* Grupo de botones del hero — Flexbox */
+.hero-cta-group {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeInUp 0.8s ease 0.6s both;
+}
+
+
+/* ================================================================
+   7. SECCIONES COMPARTIDAS
+================================================================ */
+.section {
+  padding-block: var(--space-xl);  /* shorthand: padding-top + padding-bottom */
+}
+
+/* Alterna el fondo entre secciones para romper la monotonía */
+.section:nth-child(even) {
+  background-color: var(--bg-secondary);
+}
+
+
+/* ================================================================
+   8. SOBRE MÍ — CSS GRID
+   Dos columnas: texto a la izquierda, imagen a la derecha.
+================================================================ */
+.about .container {
+  /* CSS Grid: dos columnas iguales con espacio entre ellas */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: center;
+}
+
+.about-text .section-title {
+  margin-top: var(--space-xs);
+}
+
+.about-text p {
+  color: var(--text-secondary);
+}
+
+/* Lista de logros */
+.achievements-list {
+  margin-block: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.achievement-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  font-size: var(--fs-sm);
+  color: var(--text-primary);
+}
+
+.achievement-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;  /* El ícono no se encoge */
+  margin-top: 2px;
+}
+
+/* Foto de Daniela */
+.about-photo {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;         /* Recorta la imagen para que llene el espacio */
+  object-position: bottom;      /* Enfoca la parte superior (rostro) */
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+
+/* ================================================================
+   9. PROCEDIMIENTOS — TARJETAS CON CSS GRID
+================================================================ */
+.procedures {
+  background-color: var(--bg-primary);
+}
+
+/* Cuadrícula de tarjetas: 3 columnas en desktop */
+.cards-grid {
+  /* CSS Grid con auto-fill: crea tantas columnas como quepan
+     con un mínimo de 280px cada una */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+/* Tarjeta individual */
+.card {
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition);
+  border: 1px solid var(--color-gray-light);
+}
+
+.card:hover {
+  transform: translateY(-6px);    /* Se eleva al pasar el cursor */
+  box-shadow: var(--shadow-lg);
+}
+
+/* Contenedor de la imagen de la tarjeta con altura fija */
+.card-image-wrap {
+  height: 220px;
+  overflow: hidden;
+}
+
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;   /* Zoom suave al hover */
+}
+
+.card:hover .card-img {
+  transform: scale(1.05);
+}
+
+.card-body {
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.card-title {
+  font-size: var(--fs-lg);
+  font-family: var(--font-display);
+  color: var(--color-dark);
+}
+
+.card-text {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  flex: 1;   /* El texto ocupa el espacio disponible */
+}
+
+.card-price {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: var(--space-xs);
+  border-top: 1px solid var(--color-gray-light);
+}
+
+.price {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--color-gold);
+}
+
+.price-note {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+}
+
+
+/* ================================================================
+   10. BANNER CTA (Llamado a la acción)
+   Bloque de contraste oscuro entre secciones.
+================================================================ */
+.cta-banner {
+  background: linear-gradient(135deg, var(--color-dark), #4a2d38);
+  padding-block: var(--space-xl);
+}
+
+.cta-inner {
+  text-align: center;
+}
+
+.cta-title {
+  font-family: var(--font-display);
+  font-size: clamp(var(--fs-xl), 3vw, var(--fs-2xl));
+  color: var(--color-white);
+  margin-bottom: var(--space-sm);
+}
+
+.cta-text {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: var(--fs-md);
+  margin-bottom: var(--space-lg);
+}
+
+
+/* ================================================================
+   11. CURSOS — FLEXBOX
+   Tarjetas de cursos en fila usando Flexbox con wrap.
+================================================================ */
+.courses {
+  background-color: var(--bg-secondary);
+}
+
+/* Barra de beneficios — Flexbox */
+.benefits-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-md);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md) var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+.benefit-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--color-dark);
+}
+
+.benefit-icon {
+  font-size: 1.4rem;
+}
+
+/* Tarjetas de curso — Flexbox con wrap */
+.courses-flex {
+  display: flex;
+  flex-wrap: wrap;           /* Las tarjetas saltan a nueva línea si no caben */
+  gap: var(--space-md);
+  justify-content: center;
+}
+
+.course-card {
+  /* Cada tarjeta ocupa al menos 260px y crece hasta completar el espacio */
+  flex: 1 1 260px;
+  max-width: 320px;
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition);
+  border: 1px solid var(--color-gray-light);
+  display: flex;
+  flex-direction: column;
+}
+
+.course-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.course-card-img-wrap {
+  height: 200px;
+  overflow: hidden;
+}
+
+.course-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.course-card:hover .course-card-img {
+  transform: scale(1.05);
+}
+
+.course-card-body {
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  flex: 1;   /* El cuerpo ocupa el espacio restante de la tarjeta */
+}
+
+/* Etiqueta de categoría del curso */
+.course-tag {
+  display: inline-block;
+  background-color: var(--color-rose-light);
+  color: var(--color-rose-dark);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.course-card-title {
+  font-size: var(--fs-lg);
+  font-family: var(--font-display);
+}
+
+.course-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  margin-top: auto;   /* Empuja los detalles hacia abajo */
+}
+
+.course-details li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+
+/* ================================================================
+   12. GALERÍA — CSS GRID
+   Cuadrícula asimétrica de fotos del trabajo.
+================================================================ */
+.gallery {
+  background-color: var(--bg-primary);
+}
+
+.gallery-grid {
+  /* Grid de 3 columnas con filas de 250px */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 250px);
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+}
+
+/* El primer elemento ocupa 2 filas (destacado) */
+.gallery-item:first-child {
+  grid-row: span 2;
+}
+
+.gallery-item {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.06);
+}
+
+
+/* ================================================================
+   13. CONTACTO — CSS GRID
+   Dos columnas: información a la izquierda, formulario a la derecha.
+================================================================ */
+.contact {
+  background-color: var(--bg-secondary);
+}
+
+.contact-grid {
+  /* Grid de dos columnas: info (40%) y formulario (60%) */
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-block: var(--space-md);
+}
+
+.contact-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--fs-md);
+}
+
+.contact-icon { font-size: 1.3rem; }
+
+/* Botones de redes sociales — Flexbox */
+.social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  background-color: var(--color-white);
+  color: var(--color-dark);
+  border: 1px solid var(--color-gray-light);
+  transition: all var(--transition);
+}
+
+.social-btn:hover {
+  background-color: var(--color-rose-dark);
+  color: var(--color-white);
+  border-color: var(--color-rose-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.social-btn:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+/* Formulario */
+.contact-form-wrap {
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.form-title {
+  font-size: var(--fs-lg);
+  font-family: var(--font-display);
+  margin-bottom: var(--space-md);
+  color: var(--color-dark);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: var(--space-md);
+}
+
+.form-group label {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Estilos comunes para input, select y textarea */
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 0.75rem 1rem;
+  border: 1.5px solid var(--color-gray-light);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  width: 100%;
+}
+
+/* Resalta el campo activo */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-rose-dark);
+  box-shadow: 0 0 0 3px rgba(199, 125, 150, 0.15);
+}
+
+.form-hint {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+}
+
+.form-success {
+  margin-top: var(--space-sm);
+  color: #2e7d32;
+  font-weight: 700;
+  font-size: var(--fs-sm);
+}
+
+
+/* ================================================================
+   14. FOOTER — FLEXBOX
+================================================================ */
+.site-footer {
+  background-color: var(--color-dark);
+  color: var(--text-on-dark);
+}
+
+.footer-inner {
+  /* Flexbox: distribuye los 3 bloques del footer */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-lg);
+  padding-block: var(--space-xl);
+}
+
+.footer-brand .logo-text {
+  color: var(--color-white);
+  font-size: var(--fs-lg);
+}
+
+.footer-brand .logo-sub {
+  color: var(--color-rose);
+}
+
+.footer-tagline {
+  font-size: var(--fs-sm);
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: var(--space-xs);
+}
+
+/* Navegación del footer — Flexbox */
+.footer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.footer-nav a {
+  font-size: var(--fs-sm);
+  color: rgba(255, 255, 255, 0.7);
+  transition: color var(--transition);
+}
+
+.footer-nav a:hover {
+  color: var(--color-rose);
+}
+
+/* Íconos de redes sociales del footer */
+.footer-social {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.footer-social a {
+  color: rgba(255, 255, 255, 0.7);
+  transition: color var(--transition), transform var(--transition);
+}
+
+.footer-social a:hover {
+  color: var(--color-rose);
+  transform: translateY(-3px);
+}
+
+.footer-social a:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* Línea de copyright */
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-block: var(--space-md);
+  text-align: center;
+}
+
+.footer-bottom p {
+  font-size: var(--fs-xs);
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0;
+}
+
+
+/* ================================================================
+   15. ANIMACIONES
+   reveal: los elementos aparecen al entrar en el viewport.
+   JS añade la clase 'visible' usando IntersectionObserver.
+================================================================ */
+
+/* Estado inicial: invisible y desplazado hacia abajo */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Estado final: visible en su posición */
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Retraso escalonado para que las tarjetas aparezcan en secuencia */
+.reveal:nth-child(2) { transition-delay: 0.1s; }
+.reveal:nth-child(3) { transition-delay: 0.2s; }
+.reveal:nth-child(4) { transition-delay: 0.3s; }
+.reveal:nth-child(5) { transition-delay: 0.1s; }
+.reveal:nth-child(6) { transition-delay: 0.2s; }
+
+/* Animaciones del hero (CSS puro) */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ================================================================
+   16. MEDIA QUERIES — DISEÑO RESPONSIVO
+   
+   BREAKPOINTS:
+   - Tablet: max-width 900px  → 2 columnas → 1 columna
+   - Móvil:  max-width 600px  → ajustes específicos para pantallas pequeñas
+   
+   Las media queries @media aplican estilos SOLO si se cumple la condición.
+   max-width: los estilos aplican cuando la pantalla es MÁS PEQUEÑA que el valor.
+================================================================ */
+
+/* ---- BREAKPOINT 1: TABLET (≤ 900px) ---- */
+@media (max-width: 900px) {
+
+  /* Oculta el menú horizontal y muestra el botón hamburguesa */
+  .nav-toggle {
+    display: flex;
+  }
+
+  .nav-menu {
+    /* El menú pasa a ser vertical, oculto fuera de pantalla */
+    position: fixed;
+    top: var(--navbar-h);
+    right: -100%;           /* Oculto a la derecha */
+    width: 280px;
+    height: calc(100vh - var(--navbar-h));
+    background-color: var(--bg-primary);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--space-lg) var(--space-md);
+    gap: var(--space-md);
+    box-shadow: var(--shadow-lg);
+    transition: right var(--transition);
+    z-index: 999;
+    overflow-y: auto;
+  }
+
+  /* Clase 'open' añadida por JS para mostrar el menú */
+  .nav-menu.open {
+    right: 0;
+  }
+
+  .nav-link {
+    font-size: var(--fs-md);
+  }
+
+  /* About: cambia a una sola columna */
+  .about .container {
+    grid-template-columns: 1fr;
+  }
+
+  /* La imagen va primero visualmente en móvil */
+  .about-image {
+    order: -1;
+  }
+
+  .about-photo {
+    height: 350px;
+  }
+
+  /* Contacto: una columna */
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Galería: 2 columnas */
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 220px);
+  }
+
+  .gallery-item:first-child {
+    grid-row: span 1;    /* Ya no se destaca en tablet */
+  }
+
+}
+
+/* ---- BREAKPOINT 2: MÓVIL (≤ 600px) ---- */
+@media (max-width: 600px) {
+
+  /* Reduce el espaciado general en móvil */
+  .section { padding-block: var(--space-lg); }
+
+  /* Tarjetas de procedimientos: 1 columna */
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Hero: quita el parallax en móvil (puede causar problemas en iOS) */
+  .hero {
+    background-attachment: scroll;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Galería: 1 columna en móvil */
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;   /* Filas de altura automática */
+  }
+
+  .gallery-item {
+    height: 220px;
+  }
+
+  /* Footer: todo centrado */
+  .footer-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-nav {
+    align-items: center;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+
+  /* Formulario: padding reducido */
+  .contact-form-wrap {
+    padding: var(--space-md);
+  }
+
+}
+
+
+/* ================================================================
+   17. MODO OSCURO (Dark Mode)
+   JS añade la clase 'dark-mode' al <body>.
+   También se guarda en localStorage para que persista.
+================================================================ */
+body.dark-mode {
+  /* Sobreescribe las variables de color para el tema oscuro */
+  --bg-primary:   #1a1015;
+  --bg-secondary: #231820;
+  --text-primary:   #f5eef0;
+  --text-secondary: #b09098;
+  --color-gray-light: #3d2d35;
+  --color-white:  #f5eef0;
+}
+
+body.dark-mode #site-header {
+  background-color: rgba(26, 16, 21, 0.95);
+}
+
+body.dark-mode .nav-logo .logo-text,
+body.dark-mode .nav-link,
+body.dark-mode .card-title,
+body.dark-mode .course-card-title {
+  color: var(--text-primary);
+}
+
+body.dark-mode .card,
+body.dark-mode .course-card {
+  background-color: #2a1d22;
+  border-color: #3d2d35;
+}
+
+body.dark-mode .contact-form-wrap {
+  background-color: #2a1d22;
+}
+
+body.dark-mode .benefits-bar {
+  background-color: #2a1d22;
+  border-color: #3d2d35;
+}
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group select,
+body.dark-mode .form-group textarea {
+  background-color: #1a1015;
+  border-color: #3d2d35;
+  color: var(--text-primary);
+}
+
+body.dark-mode .social-btn {
+  background-color: #2a1d22;
+  border-color: #3d2d35;
+  color: var(--text-primary);
+}
+
+body.dark-mode .nav-menu {
+  background-color: #1a1015;
+}
+
+body.dark-mode .hamburger-line {
+  background-color: var(--text-primary);
+}
