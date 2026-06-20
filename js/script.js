@@ -198,7 +198,41 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   /* ============================================================
-     6. RECORDAR NOMBRE EN EL FORMULARIO (localStorage)
+     6. CAROUSEL DE GALERÍA
+     Muestra una imagen a la vez; botones prev/next y puntos.
+  ============================================================ */
+  const carouselTrack = document.getElementById('galleryTrack');
+  const carouselDots  = document.getElementById('galleryDots');
+  const carouselPrev  = document.getElementById('galleryPrev');
+  const carouselNext  = document.getElementById('galleryNext');
+
+  if (carouselTrack && carouselDots && carouselPrev && carouselNext) {
+    const slides = carouselTrack.querySelectorAll('.carousel-slide');
+    let current  = 0;
+
+    slides.forEach(function (_, i) {
+      var dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Ir a imagen ' + (i + 1));
+      dot.addEventListener('click', function () { goTo(i); });
+      carouselDots.appendChild(dot);
+    });
+
+    function goTo(index) {
+      current = (index + slides.length) % slides.length;
+      carouselTrack.style.transform = 'translateX(-' + (current * 100) + '%)';
+      carouselDots.querySelectorAll('.carousel-dot').forEach(function (d, i) {
+        d.classList.toggle('active', i === current);
+      });
+    }
+
+    carouselPrev.addEventListener('click', function () { goTo(current - 1); });
+    carouselNext.addEventListener('click', function () { goTo(current + 1); });
+  }
+
+
+  /* ============================================================
+     7. RECORDAR NOMBRE EN EL FORMULARIO (localStorage)
      Cuando el usuario escribe su nombre en el campo de contacto,
      lo guardamos. Al recargar la página, el campo ya tiene el nombre.
      Esto demuestra persistencia de datos con Web Storage.
@@ -227,7 +261,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   /* ============================================================
-     7. SIMULACIÓN DE ENVÍO DEL FORMULARIO
+     8. SIMULACIÓN DE ENVÍO DEL FORMULARIO
      Como no hay backend, simplemente mostramos un mensaje de éxito.
      En un proyecto real, aquí iría un fetch() a una API.
   ============================================================ */
