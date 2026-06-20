@@ -303,73 +303,154 @@ p:last-child { margin-bottom: 0; }
 
 /* ================================================================
    5. HEADER & NAV — FLEXBOX
-   La navbar usa Flexbox para alinear logo, enlaces y botón de tema.
+   
+   DISEÑO:
+   - El <header> es el contenedor fijo que ocupa todo el ancho.
+   - La .navbar es la "cápsula" (pill) flotante centrada dentro del header.
+   - Al hacer scroll, SOLO la pill cambia de apariencia (no el header).
+   - Así no hay descuadre: el header siempre mide lo mismo.
 ================================================================ */
+
+/* El header es solo un contenedor transparente — nunca cambia de tamaño */
 #site-header {
-  position: fixed;           /* Fija la barra al tope de la pantalla */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
+  /* Altura fija siempre — no cambia al hacer scroll */
   height: var(--navbar-h);
-  z-index: 1000;             /* Por encima de todo el contenido */
-  background-color: rgba(1, 1, 1, 0.15);
-  backdrop-filter: blur(8px); /* Efecto de desenfoque de vidrio */
-  box-shadow: var(--shadow-sm);
-  transition: background-color var(--transition), box-shadow var(--transition);
+  z-index: 1000;
+  /* Transparente: la pill tiene su propio fondo */
+  background-color: transparent;
+  /* Padding para que la pill flote con aire en la parte superior */
+  padding: 10px var(--space-md) 0;
+  /* Centra la pill horizontalmente */
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 }
 
-/* Clase que se añade con JS al hacer scroll hacia abajo */
-#site-header.scrolled {
-  box-shadow: var(--shadow-md);
-}
-
+/* ── La PILL: cápsula flotante con glassmorphism ────────────────
+   Esta es la que cambia visualmente al hacer scroll,
+   NO el header. Así no hay layout shift ni descuadre.
+─────────────────────────────────────────────────────────────── */
 .navbar {
-  /* Flexbox: logo a la izquierda, nav a la derecha, alineados verticalmente */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 100%;
-  max-width: 1100px;
-  margin-inline: auto;
+  width: 100%;
+  max-width: 920px;
+  height: 52px;
   padding-inline: var(--space-md);
+
+  /* Pill glassmorphism — estado inicial (sobre el hero oscuro) */
+  background-color: rgba(20, 10, 15, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.25);
+
+  /* Transición suave al cambiar de estado */
+  transition: background-color 0.4s ease, border-color 0.4s ease,
+              box-shadow 0.4s ease;
 }
 
-/* Logo */
-
-.logo img {
-    
-    width: 200px;
-    height: 200px;
-    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.8));
+/* Estado al hacer scroll: pill se vuelve clara (modo claro) */
+#site-header.scrolled .navbar {
+  background-color: rgba(255, 255, 255, 0.92);
+  border-color: rgba(200, 180, 188, 0.3);
+  box-shadow: 0 2px 20px rgba(45, 31, 37, 0.1);
 }
 
-/* Menú de navegación — Flexbox */
+/* ── Logo ───────────────────────────────────────────────────── */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  /* Espacio mínimo para el logo */
+  min-width: 120px;
+}
+
+/* Imagen del logo — tamaño generoso y visible */
+.logo-image {
+  height: 130px;       /* Grande y legible dentro de la pill de 52px */
+  width: auto;
+
+  /* Sombra para que el logo dorado se vea sobre el hero oscuro */
+  filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.6)) brightness(1.1);
+  
+}
+
+.logo-footer {
+  height: 200px;       /* Grande y legible dentro de la pill de 52px */
+  width: auto;
+  object-fit: contain;
+  /* Sombra para que el logo dorado se vea sobre el hero oscuro */
+  filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.6)) brightness(1.1);
+  transition: filter var(--transition), transform var(--transition);
+}
+
+.nav-logo:hover .logo-image {
+  transform: scale(1.03);
+}
+
+/* Cuando la pill está clara, quitamos la sombra fuerte del logo */
+#site-header.scrolled .logo-image {
+  filter: drop-shadow(0 1px 3px rgba(45, 31, 37, 0.15));
+}
+
+/* ── Menú de links — centrado en la pill ───────────────────── */
 .nav-menu {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
+  gap: 2rem;
+  flex: 1;
+  justify-content: center;
 }
 
+/* Links blancos sobre hero oscuro */
 .nav-link {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 400;
   letter-spacing: 0.03em;
-  color: var(--color-rose-light);
+  color: rgba(255, 255, 255, 0.88);
   position: relative;
-  padding-bottom: 4px;
+  padding-bottom: 3px;
+  white-space: nowrap;
+  transition: color var(--transition);
 }
 
-/* Subrayado animado al hacer hover */
+/* Links oscuros cuando la pill es clara */
+#site-header.scrolled .nav-link {
+  color: var(--color-dark);
+}
+
+/* Línea animada debajo del link al hover */
 .nav-link::after {
   content: '';
   position: absolute;
   bottom: 0;
   left: 0;
   width: 0%;
-  height: 2px;
-  background-color: var(--color-rose-dark);
+  height: 1.5px;
+  background-color: rgba(255, 255, 255, 0.7);
   transition: width var(--transition);
+}
+
+#site-header.scrolled .nav-link::after {
+  background-color: var(--color-rose-dark);
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--color-white);
+}
+
+#site-header.scrolled .nav-link:hover,
+#site-header.scrolled .nav-link.active {
+  color: var(--color-rose-dark);
 }
 
 .nav-link:hover::after,
@@ -383,63 +464,129 @@ p:last-child { margin-bottom: 0; }
   border-radius: 2px;
 }
 
-/* Botón de cambio de tema */
+/* ── Toggle de tema: slider tipo interruptor ───────────────────
+   Estructura HTML esperada:
+   <button id="themeToggle" class="btn-theme" ...>
+     <span class="theme-toggle-track" aria-hidden="true">
+       <span class="theme-toggle-thumb"></span>
+     </span>
+   </button>
+   
+   El JS sigue funcionando igual: añade/quita clase 'dark-mode'
+   en el body. El CSS refleja el estado visualmente.
+─────────────────────────────────────────────────────────────── */
 .btn-theme {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 2px solid var(--color-gray-light);
-  background: var(--bg-secondary);
-  font-size: 1rem;
+  /* Quitamos estilos de botón por defecto */
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
-  transition: all var(--transition);
+  /* Mínimo espacio para el slider */
+  min-width: 50px;
 }
 
-.btn-theme:hover {
-  border-color: var(--color-rose-dark);
-  transform: scale(1.1);
+/* El "track" (pista oval del interruptor) */
+.theme-toggle-track {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 48px;
+  height: 26px;
+  border-radius: var(--radius-pill);
+  /* Fondo de la pista: oscuro sobre hero oscuro */
+  background-color: rgba(255, 255, 255, 0.12);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  transition: background-color 0.35s ease, border-color 0.35s ease;
+  /* pointer-events none para que el click llegue al <button> */
+  pointer-events: none;
+}
+
+/* Fondo claro cuando la pill es clara (modo claro sin activar) */
+#site-header.scrolled .theme-toggle-track {
+  background-color: var(--color-gray-light);
+  border-color: var(--color-gray-light);
+}
+
+/* El "thumb" (círculo que se desliza) */
+.theme-toggle-thumb {
+  position: absolute;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.85);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 0.35s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* Cuando el dark-mode está ACTIVO, el thumb se mueve a la derecha */
+body.dark-mode .theme-toggle-thumb {
+  transform: translateX(22px);
+  background-color: var(--color-gold);
+}
+
+/* Pista dorada en dark mode */
+body.dark-mode .theme-toggle-track {
+  background-color: rgba(201, 168, 76, 0.25);
+  border-color: var(--color-gold);
+}
+
+.btn-theme:hover .theme-toggle-track {
+  border-color: var(--color-gold);
 }
 
 .btn-theme:focus-visible {
   outline: 2px solid var(--color-gold);
   outline-offset: 3px;
+  border-radius: var(--radius-pill);
 }
 
-/* Botón hamburguesa — visible solo en móvil */
+/* ── Hamburguesa (móvil) ──────────────────────────────────── */
 .nav-toggle {
-  display: none;          /* Oculto en desktop */
+  display: none;        /* Oculto en desktop */
   flex-direction: column;
   justify-content: space-between;
-  width: 28px;
-  height: 20px;
+  width: 24px;
+  height: 17px;
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
+  flex-shrink: 0;
 }
 
+/* Líneas blancas sobre el hero */
 .hamburger-line {
   display: block;
   width: 100%;
-  height: 2px;
-  background-color: var(--color-dark);
+  height: 1.5px;
+  background-color: rgba(255, 255, 255, 0.88);
   border-radius: 2px;
   transition: all var(--transition);
 }
 
-/* Animación de la X al abrir el menú (JS añade clase 'open') */
-.nav-toggle.open .hamburger-line:nth-child(1) {
-  transform: translateY(9px) rotate(45deg);
+/* Líneas oscuras cuando la pill es clara */
+#site-header.scrolled .hamburger-line {
+  background-color: var(--color-dark);
 }
 
+body.dark-mode .hamburger-line {
+  background-color: rgba(255, 255, 255, 0.88);
+}
+
+/* Animación X al abrir menú */
+.nav-toggle.open .hamburger-line:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
 .nav-toggle.open .hamburger-line:nth-child(2) {
   opacity: 0;
 }
-
 .nav-toggle.open .hamburger-line:nth-child(3) {
-  transform: translateY(-9px) rotate(-45deg);
+  transform: translateY(-7.5px) rotate(-45deg);
 }
 
 .nav-toggle:focus-visible {
@@ -691,7 +838,7 @@ p:last-child { margin-bottom: 0; }
    Bloque de contraste oscuro entre secciones.
 ================================================================ */
 .cta-banner {
-  background: linear-gradient(135deg, var(--color-dark), #4a2d38);
+  background: linear-gradient(135deg, var(--color-rose-light), #ba728d);
   padding-block: var(--space-xl);
 }
 
@@ -872,56 +1019,177 @@ p:last-child { margin-bottom: 0; }
 
 
 /* ================================================================
-   13. CONTACTO — CSS GRID
-   Dos columnas: información a la izquierda, formulario a la derecha.
+   13. CONTACTO — Split panels sobre fondo oscuro
+   
+   Dos paneles lado a lado, fondo sólido oscuro con textura
+   de gradiente. Sin imagen de fondo externa para que funcione
+   siempre. Diseño editorial elegante.
 ================================================================ */
 .contact {
-  background-color: var(--bg-secondary);
+  /* Sin padding-block: los paneles controlan su propio espacio */
+  padding-block: 0;
+  position: relative;
+  overflow: hidden;
 }
 
-.contact-grid {
-  /* Grid de dos columnas: info (40%) y formulario (60%) */
+/* Fondo de la sección: gradiente oscuro con toque rosa */
+.contact::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 20% 50%, rgba(90, 30, 55, 0.55) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 70% at 80% 50%, rgba(45, 15, 30, 0.7) 0%, transparent 70%),
+    #1a0f14;
+  z-index: 0;
+}
+
+/* Grid de dos paneles (CSS Grid) */
+.contact-panels {
+  position: relative;
+  z-index: 1;
   display: grid;
-  grid-template-columns: 2fr 3fr;
-  gap: var(--space-xl);
-  align-items: start;
+  grid-template-columns: 1fr 1fr;
+  /* Línea divisoria entre los dos paneles */
+  gap: 0;
 }
 
-.contact-list {
+/* Cada panel */
+.contact-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-2xl) var(--space-xl);
+  min-height: 60vh;
+}
+
+/* Panel izquierdo: borde derecho decorativo */
+.contact-panel:first-child {
+  border-right: 1px solid rgba(201, 168, 76, 0.2);
+}
+
+/* ── Contenido del panel izquierdo ── */
+.contact-panel .section-tag {
+  /* Rosa sobre fondo oscuro */
+  color: var(--color-rose);
+  letter-spacing: 0.2em;
+}
+
+/* Título enorme estilo editorial */
+.contact-panel .section-title {
+  color: var(--color-white);
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  line-height: 1;
+  margin-bottom: var(--space-md);
+  /* Itálica para la palabra "Hablemos" */
+  font-style: italic;
+}
+
+.contact-panel > p {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: var(--fs-md);
+  max-width: 360px;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+/* Botón de WhatsApp dentro del panel */
+.contact-panel .btn-gold {
+  margin-top: var(--space-lg);
+  align-self: flex-start;
+  /* Fondo dorado sólido, letra oscura */
+  background-color: var(--color-gold);
+  color: var(--color-dark);
+  border-color: var(--color-gold);
+  font-size: var(--fs-sm);
+  letter-spacing: 0.06em;
+}
+
+.contact-panel .btn-gold:hover {
+  background-color: var(--color-gold-light);
+  border-color: var(--color-gold-light);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(201, 168, 76, 0.35);
+}
+
+/* ── Contenido del panel derecho ── */
+.contact-panel-title {
+  font-family: var(--font-display);
+  font-size: clamp(var(--fs-xl), 2.5vw, var(--fs-2xl));
+  color: var(--color-white);
+  font-weight: 400;
+  margin-bottom: var(--space-sm);
+  line-height: 1.1;
+}
+
+.contact-panel-subtitle {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: var(--fs-sm);
+  margin-bottom: var(--space-lg);
+}
+
+/* Lista de datos de contacto */
+.contact-panel-list {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
-  margin-block: var(--space-md);
+  margin-bottom: var(--space-lg);
 }
 
-.contact-list li {
+.contact-panel-list li {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
   font-size: var(--fs-md);
+  color: rgba(255, 255, 255, 0.75);
 }
 
-.contact-icon { font-size: 1.3rem; }
+.contact-panel-list .contact-icon {
+  font-size: 1.1rem;
+  color: var(--color-rose);
+}
 
-/* Botones de redes sociales — Flexbox */
+.contact-panel-list a {
+  color: var(--color-rose);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: color var(--transition), letter-spacing var(--transition);
+}
+
+.contact-panel-list a:hover {
+  color: var(--color-gold);
+  letter-spacing: 0.05em;
+}
+
+/* Divisor decorativo dorado antes de los botones sociales */
+.contact-divider {
+  width: 40px;
+  height: 1px;
+  background-color: var(--color-gold);
+  margin-bottom: var(--space-md);
+  opacity: 0.5;
+}
+
+/* Botones de redes sociales sobre fondo oscuro */
 .social-links {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-sm);
-  margin-top: var(--space-md);
+  gap: var(--space-xs);
+  margin-top: 0;
 }
 
 .social-btn {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 0.5rem 1rem;
+  padding: 0.45rem 1rem;
   border-radius: var(--radius-pill);
   font-size: var(--fs-sm);
   font-weight: 700;
-  background-color: var(--color-white);
-  color: var(--color-dark);
-  border: 1px solid var(--color-gray-light);
+  /* Sobre fondo oscuro: fondo translúcido con borde */
+  background-color: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   transition: all var(--transition);
 }
 
@@ -930,76 +1198,12 @@ p:last-child { margin-bottom: 0; }
   color: var(--color-white);
   border-color: var(--color-rose-dark);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 12px rgba(199, 125, 150, 0.3);
 }
 
 .social-btn:focus-visible {
   outline: 2px solid var(--color-gold);
   outline-offset: 3px;
-}
-
-/* Formulario */
-.contact-form-wrap {
-  background-color: var(--bg-primary);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg);
-  box-shadow: var(--shadow-md);
-}
-
-.form-title {
-  font-size: var(--fs-lg);
-  font-family: var(--font-display);
-  margin-bottom: var(--space-md);
-  color: var(--color-dark);
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: var(--space-md);
-}
-
-.form-group label {
-  font-size: var(--fs-sm);
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-/* Estilos comunes para input, select y textarea */
-.form-group input,
-.form-group select,
-.form-group textarea {
-  padding: 0.75rem 1rem;
-  border: 1.5px solid var(--color-gray-light);
-  border-radius: var(--radius-sm);
-  font-family: var(--font-body);
-  font-size: var(--fs-sm);
-  color: var(--text-primary);
-  background-color: var(--bg-primary);
-  transition: border-color var(--transition), box-shadow var(--transition);
-  width: 100%;
-}
-
-/* Resalta el campo activo */
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-  outline: none;
-  border-color: var(--color-rose-dark);
-  box-shadow: 0 0 0 3px rgba(199, 125, 150, 0.15);
-}
-
-.form-hint {
-  font-size: var(--fs-xs);
-  color: var(--text-secondary);
-}
-
-.form-success {
-  margin-top: var(--space-sm);
-  color: #2e7d32;
-  font-weight: 700;
-  font-size: var(--fs-sm);
 }
 
 
@@ -1146,31 +1350,49 @@ p:last-child { margin-bottom: 0; }
     display: flex;
   }
 
+  /* Reduce la pill en tablet para dar espacio al hamburguesa */
+  .navbar {
+    max-width: calc(100% - 2rem);
+    padding-inline: var(--space-sm);
+  }
+
+  /* El menú se convierte en un panel lateral que desliza */
   .nav-menu {
-    /* El menú pasa a ser vertical, oculto fuera de pantalla */
     position: fixed;
     top: var(--navbar-h);
-    right: -100%;           /* Oculto a la derecha */
-    width: 280px;
+    right: -100%;
+    width: 260px;
     height: calc(100vh - var(--navbar-h));
-    background-color: var(--bg-primary);
+    /* Fondo oscuro siempre — consistente en claro y oscuro */
+    background-color: #1a0f14;
+    border-left: 1px solid rgba(201, 168, 76, 0.2);
     flex-direction: column;
     align-items: flex-start;
+    justify-content: flex-start;
     padding: var(--space-lg) var(--space-md);
     gap: var(--space-md);
-    box-shadow: var(--shadow-lg);
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.3);
     transition: right var(--transition);
     z-index: 999;
     overflow-y: auto;
   }
 
-  /* Clase 'open' añadida por JS para mostrar el menú */
   .nav-menu.open {
     right: 0;
   }
 
-  .nav-link {
+  /* Links blancos en el panel lateral móvil — siempre */
+  .nav-menu .nav-link {
+    color: rgba(255, 255, 255, 0.88);
     font-size: var(--fs-md);
+  }
+
+  .nav-menu .nav-link::after {
+    background-color: var(--color-rose);
+  }
+
+  .nav-menu .nav-link:hover {
+    color: var(--color-rose);
   }
 
   /* About: cambia a una sola columna */
@@ -1190,6 +1412,21 @@ p:last-child { margin-bottom: 0; }
   /* Contacto: una columna */
   .contact-grid {
     grid-template-columns: 1fr;
+  }
+
+  /* Contacto: paneles apilados en tablet */
+  .contact-panels {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-panel:first-child {
+    border-right: none;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+  }
+
+  .contact-panel {
+    min-height: auto;
+    padding: var(--space-xl) var(--space-md);
   }
 
   /* Galería: 2 columnas */
@@ -1262,61 +1499,95 @@ p:last-child { margin-bottom: 0; }
    17. MODO OSCURO (Dark Mode)
    JS añade la clase 'dark-mode' al <body>.
    También se guarda en localStorage para que persista.
+   
+   El slider toggle en el navbar refleja el estado visualmente
+   (el thumb se mueve a la derecha y se vuelve dorado).
 ================================================================ */
 body.dark-mode {
-  /* Sobreescribe las variables de color para el tema oscuro */
-  --bg-primary:   #1a1015;
-  --bg-secondary: #231820;
-  --text-primary:   #f5eef0;
-  --text-secondary: #b09098;
-  --color-gray-light: #3d2d35;
-  --color-white:  #f5eef0;
+  --bg-primary:   #130d10;
+  --bg-secondary: #1c141a;
+  --text-primary:   #f0e8ec;
+  --text-secondary: #a08890;
+  --color-gray-light: #3a2830;
+  --color-white:  #f0e8ec;
+  --color-off-white: #1c141a;
 }
 
-body.dark-mode #site-header {
-  background-color: rgba(26, 16, 21, 0.95);
+/* Header oscuro — la pill adapta su look */
+body.dark-mode #site-header:not(.scrolled) .navbar {
+  background-color: rgba(10, 5, 8, 0.7);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
-body.dark-mode .nav-logo .logo-text,
-body.dark-mode .nav-link,
+body.dark-mode #site-header.scrolled .navbar {
+  background-color: rgba(19, 13, 16, 0.96);
+  border-color: rgba(201, 168, 76, 0.2);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Links visibles en dark mode al hacer scroll */
+body.dark-mode #site-header.scrolled .nav-link {
+  color: var(--text-primary);
+}
+
+body.dark-mode #site-header.scrolled .nav-link:hover {
+  color: var(--color-rose);
+}
+
+body.dark-mode #site-header.scrolled .nav-link::after {
+  background-color: var(--color-rose);
+}
+
+/* Logo en dark mode scrolled */
+body.dark-mode #site-header.scrolled .logo-image {
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.5)) brightness(1.05);
+}
+
+/* Hamburger en dark mode scrolled */
+body.dark-mode #site-header.scrolled .hamburger-line {
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+/* Tarjetas */
+body.dark-mode .card,
+body.dark-mode .course-card {
+  background-color: #231519;
+  border-color: #3a2830;
+}
+
 body.dark-mode .card-title,
 body.dark-mode .course-card-title {
   color: var(--text-primary);
 }
 
-body.dark-mode .card,
-body.dark-mode .course-card {
-  background-color: #2a1d22;
-  border-color: #3d2d35;
-}
-
-body.dark-mode .contact-form-wrap {
-  background-color: #2a1d22;
-}
-
+/* Barra de beneficios */
 body.dark-mode .benefits-bar {
-  background-color: #2a1d22;
-  border-color: #3d2d35;
+  background-color: #231519;
+  border-color: #3a2830;
 }
 
-body.dark-mode .form-group input,
-body.dark-mode .form-group select,
-body.dark-mode .form-group textarea {
-  background-color: #1a1015;
-  border-color: #3d2d35;
+body.dark-mode .benefit-item {
   color: var(--text-primary);
 }
 
-body.dark-mode .social-btn {
-  background-color: #2a1d22;
-  border-color: #3d2d35;
-  color: var(--text-primary);
-}
-
+/* Menú móvil */
 body.dark-mode .nav-menu {
-  background-color: #1a1015;
+  background-color: #130d10;
 }
 
-body.dark-mode .hamburger-line {
-  background-color: var(--text-primary);
+/* Sección de cursos */
+body.dark-mode .courses {
+  background-color: var(--bg-secondary);
+}
+
+/* Footer */
+body.dark-mode .site-footer {
+  background-color: #0d080b;
+}
+
+/* Social buttons en zonas claras (ej: footer) */
+body.dark-mode .footer-inner .social-btn {
+  background-color: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.75);
 }

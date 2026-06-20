@@ -155,44 +155,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   /* ============================================================
-     5. CAMBIO DE TEMA CLARO / OSCURO
-     Al hacer clic en el botón de luna/sol:
-     - Alterna la clase 'dark-mode' en el <body>
-     - Cambia el ícono del botón
-     - GUARDA la preferencia en localStorage para que persista
-       incluso si el usuario recarga la página
+     5. CAMBIO DE TEMA CLARO / OSCURO — Slider Toggle
+     
+     El botón #themeToggle tiene un slider visual (track + thumb).
+     El CSS mueve el thumb automáticamente cuando body tiene
+     la clase 'dark-mode' — no necesitamos cambiar íconos.
+     
+     Solo manejamos:
+     - Añadir/quitar clase 'dark-mode' en el <body>
+     - Guardar/leer la preferencia en localStorage
   ============================================================ */
   const themeToggle = document.getElementById('themeToggle');
-  const themeIcon   = document.getElementById('themeIcon');
 
-  // Función que activa el modo oscuro
-  function activateDarkMode () {
+  /* Activa modo oscuro: añade clase + guarda en localStorage */
+  function activateDarkMode() {
     document.body.classList.add('dark-mode');
-    themeIcon.textContent = '☀️';  // Cambia a sol (para volver a claro)
-    // localStorage.setItem guarda un par clave-valor en el navegador
     localStorage.setItem('beauty-theme', 'dark');
   }
 
-  // Función que activa el modo claro
-  function activateLightMode () {
+  /* Activa modo claro: quita clase + guarda en localStorage */
+  function activateLightMode() {
     document.body.classList.remove('dark-mode');
-    themeIcon.textContent = '🌙'; // Cambia a luna (para volver a oscuro)
     localStorage.setItem('beauty-theme', 'light');
   }
 
-  // Al cargar la página, verificamos si el usuario ya eligió un tema antes
-  // localStorage.getItem devuelve null si no existe el valor
+  /* Al cargar la página, aplicamos el tema guardado (si existe) */
   const savedTheme = localStorage.getItem('beauty-theme');
-
   if (savedTheme === 'dark') {
-    // Si el usuario eligió oscuro en una visita anterior, lo aplicamos
     activateDarkMode();
   }
 
-  // Evento clic en el botón de tema
+  /* Al hacer clic en el toggle, alternamos entre claro y oscuro */
   if (themeToggle) {
     themeToggle.addEventListener('click', function () {
-      // Si el body ya tiene la clase dark-mode, cambiamos a claro; si no, a oscuro
       if (document.body.classList.contains('dark-mode')) {
         activateLightMode();
       } else {

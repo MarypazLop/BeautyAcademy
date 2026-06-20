@@ -1,61 +1,48 @@
 <!DOCTYPE html>
+
 <html lang="es">
-
 <head>
-  <meta charset="UTF-8" />
-  <!-- El viewport hace que la página se adapte al ancho del dispositivo -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Beauty Academy Daniela Quesada — Micropigmentación, extensiones de pestañas, cursos y más. Costa Rica." />
-  <title>Beauty Academy Daniela Quesada</title>
-
-  <!-- Fuentes de Google: Cormorant Garamond para títulos elegantes, Lato para cuerpo de texto -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
-
-  <!-- Hoja de estilos externa (requisito del laboratorio: CSS en archivo separado) -->
-  <link rel="stylesheet" href="css/style.css" />
+<meta charset="utf-8"/>
+<!-- El viewport hace que la página se adapte al ancho del dispositivo -->
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Beauty Academy Daniela Quesada — Micropigmentación, extensiones de pestañas, cursos y más. Costa Rica." name="description"/>
+<title>Beauty Academy Daniela Quesada</title>
+<!-- Fuentes de Google: Cormorant Garamond para títulos elegantes, Lato para cuerpo de texto -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&amp;family=Lato:wght@300;400;700&amp;display=swap" rel="stylesheet"/>
+<!-- Hoja de estilos externa (requisito del laboratorio: CSS en archivo separado) -->
+<link href="css/style.css" rel="stylesheet"/>
 </head>
-
 <body>
-
-  <!-- ============================================================
+<!-- ============================================================
        HEADER & NAV
        El <header> contiene la barra de navegación principal.
        El <nav> agrupa los enlaces de navegación (semántica HTML5).
   ============================================================ -->
-  <header id="site-header" role="banner">
-    <nav class="navbar" aria-label="Navegación principal">
-
-      <!-- Logo / Marca -->
-      <a href="#inicio" class="nav-logo" aria-label="Ir al inicio - Beauty Academy Daniela Quesada">
-        <div class="logo">
-            <img src="img/logo.webp" alt="Beauty Academy">
-        </div>
-      </a>
-
-      <!-- Botón hamburguesa para móvil (visible solo en pantallas pequeñas) -->
-      <button
-        class="nav-toggle"
-        id="navToggle"
-        aria-expanded="false"
-        aria-controls="navMenu"
-        aria-label="Abrir menú de navegación"
-      >
-        <!-- Tres líneas que forman el ícono de hamburguesa -->
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-      </button>
-
-      <!-- Lista de enlaces de navegación -->
-      <ul class="nav-menu" id="navMenu" role="list">
-        <li><a href="#inicio" class="nav-link">Inicio</a></li>
-        <li><a href="#sobre-mi" class="nav-link">Sobre mí</a></li>
-        <li><a href="#procedimientos" class="nav-link">Procedimientos</a></li>
-        <li><a href="#cursos" class="nav-link">Cursos</a></li>
-        <li><a href="#contacto" class="nav-link">Contacto</a></li>
-        <!-- Botón de tema claro/oscuro -->
+<header id="site-header" role="banner">
+<nav aria-label="Navegación principal" class="navbar">
+<!-- Logo / Marca -->
+<a aria-label="Ir al inicio - Beauty Academy Daniela Quesada" class="nav-logo" href="#inicio">
+<img alt="Logo de Beauty Academy Daniela Quesada" class="logo-image" decoding="async" loading="lazy" src="img/logo.webp"/>
+</a>
+<!-- Botón hamburguesa para móvil (visible solo en pantallas pequeñas) -->
+<button aria-controls="navMenu" aria-expanded="false" aria-label="Abrir menú de navegación" class="nav-toggle" id="navToggle">
+<!-- Tres líneas que forman el ícono de hamburguesa -->
+<span class="hamburger-line"></span>
+<span class="hamburger-line"></span>
+<span class="hamburger-line"></span>
+</button>
+<!-- Lista de enlaces de navegación -->
+<ul class="nav-menu" id="navMenu" role="list">
+<li><a class="nav-link" href="#inicio">Inicio</a></li>
+<li><a class="nav-link" href="#sobre-mi">Sobre mí</a></li>
+<li><a class="nav-link" href="#procedimientos">Procedimientos</a></li>
+<li><a class="nav-link" href="#cursos">Cursos</a></li>
+<li><a class="nav-link" href="#contacto">Contacto</a></li>
+        <!-- Botón toggle de tema: slider visual tipo interruptor.
+               El JS sigue escuchando el clic en #themeToggle.
+               El CSS mueve el thumb cuando body tiene clase 'dark-mode'. -->
         <li>
           <button
             id="themeToggle"
@@ -63,650 +50,538 @@
             aria-label="Cambiar tema claro u oscuro"
             title="Cambiar tema"
           >
-            <!-- El ícono cambia con JavaScript -->
-            <span id="themeIcon" aria-hidden="true">🌙</span>
+            <!-- Track (pista oval) + Thumb (círculo deslizante) -->
+            <span class="theme-toggle-track" aria-hidden="true">
+              <span class="theme-toggle-thumb"></span>
+            </span>
           </button>
         </li>
-      </ul>
-
-    </nav>
-  </header>
-
-  <!-- ============================================================
+</ul>
+</nav>
+</header>
+<!-- ============================================================
        MAIN — Todo el contenido principal va dentro de <main>
   ============================================================ -->
-  <main id="main-content">
-
-    <!-- ===== SECCIÓN 1: HERO (Inicio) ===========================
+<main id="main-content">
+<!-- ===== SECCIÓN 1: HERO (Inicio) ===========================
          Primera impresión de la página. Imagen de fondo grande,
          texto centrado y llamado a la acción (CTA).
     ============================================================ -->
-    <section id="inicio" class="hero" aria-label="Sección de bienvenida">
-      <!-- Overlay oscuro sobre la imagen para mejorar legibilidad del texto -->
-      <div class="hero-overlay" aria-hidden="true"></div>
-
-      <div class="hero-content">
-        <!-- Imagen placeholder del hero — reemplazar con foto real -->
-        <div class="hero-badge" aria-hidden="true">✦ Campeona Centroamericana ✦</div>
-        <h1 class="hero-title">
-          Beauty Academy<br />
-          <em>Daniela Quesada</em>
-        </h1>
-        <p class="hero-subtitle">
+<section aria-label="Sección de bienvenida" class="hero" id="inicio">
+<!-- Overlay oscuro sobre la imagen para mejorar legibilidad del texto -->
+<div aria-hidden="true" class="hero-overlay"></div>
+<div class="hero-content">
+<!-- Imagen placeholder del hero — reemplazar con foto real -->
+<div aria-hidden="true" class="hero-badge">✦ Campeona Centroamericana ✦</div>
+<h1 class="hero-title">
+          Beauty Academy<br/>
+<em>Daniela Quesada</em>
+</h1>
+<p class="hero-subtitle">
           Micropigmentación · Extensiones de Pestañas · Cursos Profesionales
         </p>
-        <div class="hero-cta-group">
-          <a href="#procedimientos" class="btn btn-primary">Ver Procedimientos</a>
-          <a href="#cursos" class="btn btn-outline">Conocer Cursos</a>
-        </div>
-      </div>
-
-      <!-- Imagen de fondo del hero (se aplica desde CSS para poder cambiarla fácilmente) -->
-      <!-- Para cambiar la imagen del hero, edita la variable --hero-bg en style.css -->
-    </section>
-
-    <!-- ===== SECCIÓN 2: SOBRE MÍ ================================
+<div class="hero-cta-group">
+<a class="btn btn-primary" href="#procedimientos">Ver Procedimientos</a>
+<a class="btn btn-outline" href="#cursos">Conocer Cursos</a>
+</div>
+</div>
+<!-- Imagen de fondo del hero (se aplica desde CSS para poder cambiarla fácilmente) -->
+<!-- Para cambiar la imagen del hero, edita la variable --hero-bg en style.css -->
+</section>
+<!-- ===== SECCIÓN 2: SOBRE MÍ ================================
          Presenta a Daniela: foto, bio y logros.
          Usa CSS Grid para dividir texto e imagen.
     ============================================================ -->
-    <section id="sobre-mi" class="section about" aria-labelledby="about-title">
-      <div class="container">
-
-        <!-- Columna de texto -->
-        <div class="about-text reveal">
-          <span class="section-tag">Conóceme</span>
-          <h2 id="about-title" class="section-title">Hola, soy Daniela!</h2>
-          <p>
+<section aria-labelledby="about-title" class="section about" id="sobre-mi">
+<div class="container">
+<!-- Columna de texto -->
+<div class="about-text reveal">
+<span class="section-tag">Conóceme</span>
+<h2 class="section-title" id="about-title">Hola, soy Daniela!</h2>
+<p>
             Tengo 27 años, soy licenciada en Español y profesional en micropigmentación y lashista.
             Desde hace dos años dirijo mi propia academia, donde me dedico a resaltar la belleza
             de mis clientas y compartir mi pasión a través de cursos de belleza.
           </p>
-          <p>
+<p>
             Mi enfoque es brindar un servicio personalizado y de calidad, ayudando a cada persona
             a descubrir y potenciar su belleza natural.
           </p>
-
-          <!-- Lista de logros — icono decorativo + texto -->
-          <ul class="achievements-list" aria-label="Logros de Daniela Quesada">
-            <li class="achievement-item">
-              <span class="achievement-icon" aria-hidden="true">🏆</span>
-              <span>Campeona Centroamericana · 1er lugar The Queen Night — Microblading</span>
-            </li>
-            <li class="achievement-item">
-              <span class="achievement-icon" aria-hidden="true">🥈</span>
-              <span>2do lugar The Queen Night — Full Lips</span>
-            </li>
-            <li class="achievement-item">
-              <span class="achievement-icon" aria-hidden="true">🏅</span>
-              <span>2do lugar Microblading Wulop Centroamérica 2023 y 2024</span>
-            </li>
-          </ul>
-
-          <a href="#contacto" class="btn btn-primary">Reservar cita</a>
-        </div>
-
-        <!-- Columna de imagen -->
-        <div class="about-image reveal">
-          <img
-            src="img/daniela-placeholder.webp"
-            alt="Daniela Quesada, fundadora de Beauty Academy Daniela Quesada, Costa Rica"
-            class="about-photo"
-            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-          />
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ===== SECCIÓN 3: PROCEDIMIENTOS ==========================
+<!-- Lista de logros — icono decorativo + texto -->
+<ul aria-label="Logros de Daniela Quesada" class="achievements-list">
+<li class="achievement-item">
+<span aria-hidden="true" class="achievement-icon">🏆</span>
+<span>Campeona Centroamericana · 1er lugar The Queen Night — Microblading</span>
+</li>
+<li class="achievement-item">
+<span aria-hidden="true" class="achievement-icon">🥈</span>
+<span>2do lugar The Queen Night — Full Lips</span>
+</li>
+<li class="achievement-item">
+<span aria-hidden="true" class="achievement-icon">🏅</span>
+<span>2do lugar Microblading Wulop Centroamérica 2023 y 2024</span>
+</li>
+</ul>
+<a class="btn btn-primary" href="#contacto">Reservar cita</a>
+</div>
+<!-- Columna de imagen -->
+<div class="about-image reveal">
+<img alt="Daniela Quesada, fundadora de Beauty Academy Daniela Quesada, Costa Rica" class="about-photo" decoding="async" loading="lazy" src="img/daniela-placeholder.webp">
+</img></div>
+</div>
+</section>
+<!-- ===== SECCIÓN 3: PROCEDIMIENTOS ==========================
          Catálogo de procedimientos ofrecidos.
          Tarjetas animadas al hacer scroll (reveal).
          Usa CSS Grid para la cuadrícula de tarjetas.
     ============================================================ -->
-    <section id="procedimientos" class="section procedures" aria-labelledby="procedures-title">
-      <div class="container">
-        <span class="section-tag">Catálogo 2026</span>
-        <h2 id="procedures-title" class="section-title text-center">Procedimientos</h2>
-        <p class="section-subtitle text-center">
+<section aria-labelledby="procedures-title" class="section procedures" id="procedimientos">
+<div class="container">
+<span class="section-tag">Catálogo 2026</span>
+<h2 class="section-title text-center" id="procedures-title">Procedimientos</h2>
+<p class="section-subtitle text-center">
           Cada procedimiento es personalizado y realizado con los más altos estándares de calidad.
         </p>
+<!-- Cuadrícula de tarjetas de procedimientos (CSS Grid) -->
+<div class="cards-grid" role="list">
+<!-- TARJETA: Microblading -->
+<article aria-label="Procedimiento: Microblading" class="card reveal" role="listitem">
+<div class="card-image-wrap">
+<img alt="Resultado de microblading — cejas naturales y definidas" class="card-img" decoding="async" loading="lazy" src="img/microblading.webp"/>
 
-        <!-- Cuadrícula de tarjetas de procedimientos (CSS Grid) -->
-        <div class="cards-grid" role="list">
-
-          <!-- TARJETA: Microblading -->
-          <article class="card reveal" role="listitem" aria-label="Procedimiento: Microblading">
-            <div class="card-image-wrap">
-              <img
-                src="img/microblading.webp"
-                alt="Resultado de microblading — cejas naturales y definidas"
-                class="card-img"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-              />
-              <div class="img-placeholder" style="display:none;" aria-hidden="true"><span>🖼️</span></div>
-            </div>
-            <div class="card-body">
-              <h3 class="card-title">Microblading</h3>
-              <p class="card-text">
+</div>
+<div class="card-body">
+<h3 class="card-title">Microblading</h3>
+<p class="card-text">
                 Técnica semipermanente que crea trazos finos imitando los pelos naturales de las cejas.
                 Acabado natural y definido.
               </p>
-              <div class="card-price">
-                <span class="price">₡82,500</span>
-                <span class="price-note">Retoque al mes: ₡55,000</span>
-              </div>
-            </div>
-          </article>
+<div class="card-price">
+<span class="price">₡82,500</span>
+<span class="price-note">Retoque al mes: ₡55,000</span>
+</div>
+</div>
+</article>
+<!-- TARJETA: Efecto Polvo -->
+<article aria-label="Procedimiento: Efecto Polvo" class="card reveal" role="listitem">
+<div class="card-image-wrap">
+<img alt="Resultado de efecto polvo — cejas suaves y difusas" class="card-img" decoding="async" loading="lazy" src="img/efectopolvo.webp"/>
 
-          <!-- TARJETA: Efecto Polvo -->
-          <article class="card reveal" role="listitem" aria-label="Procedimiento: Efecto Polvo">
-            <div class="card-image-wrap">
-              <img
-                src="img/efectopolvo.webp"
-                alt="Resultado de efecto polvo — cejas suaves y difusas"
-                class="card-img"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-              />
-              <div class="img-placeholder" style="display:none;" aria-hidden="true"><span>🖼️</span></div>
-            </div>
-            <div class="card-body">
-              <h3 class="card-title">Efecto Polvo</h3>
-              <p class="card-text">
+</div>
+<div class="card-body">
+<h3 class="card-title">Efecto Polvo</h3>
+<p class="card-text">
                 Acabado suave y difuso, similar al uso de sombra para cejas. Ideal para un look
                 más lleno con acabado natural.
               </p>
-              <div class="card-price">
-                <span class="price">₡82,500</span>
-                <span class="price-note">Retoque al mes: ₡55,000</span>
-              </div>
-            </div>
-          </article>
+<div class="card-price">
+<span class="price">₡82,500</span>
+<span class="price-note">Retoque al mes: ₡55,000</span>
+</div>
+</div>
+</article>
+<!-- TARJETA: Híbridas -->
+<article aria-label="Procedimiento: Cejas Híbridas" class="card reveal" role="listitem">
+<div class="card-image-wrap">
+<img alt="Resultado de cejas híbridas — combinación de microblading y efecto polvo" class="card-img" decoding="async" loading="lazy" src="img/hibridas.jpg"/>
 
-          <!-- TARJETA: Híbridas -->
-          <article class="card reveal" role="listitem" aria-label="Procedimiento: Cejas Híbridas">
-            <div class="card-image-wrap">
-              <img
-                src="img/hibridas.jpg"
-                alt="Resultado de cejas híbridas — combinación de microblading y efecto polvo"
-                class="card-img"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-              />
-              <div class="img-placeholder" style="display:none;" aria-hidden="true"><span>🖼️</span></div>
-            </div>
-            <div class="card-body">
-              <h3 class="card-title">Híbridas</h3>
-              <p class="card-text">
+</div>
+<div class="card-body">
+<h3 class="card-title">Híbridas</h3>
+<p class="card-text">
                 Combina microblading y efecto polvo para un resultado tridimensional que resalta
                 la forma natural de las cejas.
               </p>
-              <div class="card-price">
-                <span class="price">₡92,500</span>
-                <span class="price-note">Retoque al mes: ₡55,000</span>
-              </div>
-            </div>
-          </article>
+<div class="card-price">
+<span class="price">₡92,500</span>
+<span class="price-note">Retoque al mes: ₡55,000</span>
+</div>
+</div>
+</article>
+<!-- TARJETA: Full Lips -->
+<article aria-label="Procedimiento: Full Lips" class="card reveal" role="listitem">
+<div class="card-image-wrap">
+<img alt="Resultado de full lips — labios con color suave y natural" class="card-img" decoding="async" loading="lazy" src="img/full-lips.webp"/>
 
-          <!-- TARJETA: Full Lips -->
-          <article class="card reveal" role="listitem" aria-label="Procedimiento: Full Lips">
-            <div class="card-image-wrap">
-              <img
-                src="img/full-lips.webp"
-                alt="Resultado de full lips — labios con color suave y natural"
-                class="card-img"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-              />
-              <div class="img-placeholder" style="display:none;" aria-hidden="true"><span>🖼️</span></div>
-            </div>
-            <div class="card-body">
-              <h3 class="card-title">Full Lips</h3>
-              <p class="card-text">
+</div>
+<div class="card-body">
+<h3 class="card-title">Full Lips</h3>
+<p class="card-text">
                 Técnica acuarela lips que proporciona un color suave y natural a los labios,
                 dándoles un aspecto fresco y jugoso.
               </p>
-              <div class="card-price">
-                <span class="price">₡92,500</span>
-                <span class="price-note">Retoque a los 2 meses: ₡55,000</span>
-              </div>
-            </div>
-          </article>
+<div class="card-price">
+<span class="price">₡92,500</span>
+<span class="price-note">Retoque a los 2 meses: ₡55,000</span>
+</div>
+</div>
+</article>
+<!-- TARJETA: Full Lips -->
+<article aria-label="Procedimiento: Full Lips" class="card reveal" role="listitem">
+<div class="card-image-wrap">
+<img alt="Resultado de full lips — labios con color suave y natural" class="card-img" decoding="async" loading="lazy" src="img/neutralizacion-labios.webp"/>
 
-          <!-- TARJETA: Full Lips -->
-          <article class="card reveal" role="listitem" aria-label="Procedimiento: Full Lips">
-            <div class="card-image-wrap">
-              <img
-                src="img/neutralizacion-labios.webp"
-                alt="Resultado de full lips — labios con color suave y natural"
-                class="card-img"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-              />
-              <div class="img-placeholder" style="display:none;" aria-hidden="true"><span>🖼️</span></div>
-            </div>
-            <div class="card-body">
-              <h3 class="card-title">Neutralización de labios</h3>
-              <p class="card-text">
+</div>
+<div class="card-body">
+<h3 class="card-title">Neutralización de labios</h3>
+<p class="card-text">
                 Técnica de micropigmentación correctiva que devuelve armonía y luminosidad
                 a tus labios.
               </p>
-              <div class="card-price">
-                <span class="price">₡92,500</span>
-                <span class="price-note">Retoque a los 2 meses: ₡55,000</span>
-              </div>
-            </div>
-          </article>
+<div class="card-price">
+<span class="price">₡92,500</span>
+<span class="price-note">Retoque a los 2 meses: ₡55,000</span>
+</div>
+</div>
+</article>
+<!-- TARJETA: Pestañas Clásicas -->
+<article aria-label="Procedimiento: Pestañas Clásicas" class="card reveal" role="listitem">
+<div class="card-image-wrap">
+<img alt="Resultado de extensiones de pestañas clásicas — mirada natural y elegante" class="card-img" decoding="async" loading="lazy" src="img/pestanas-clasicas.jpg"/>
 
-          <!-- TARJETA: Pestañas Clásicas -->
-          <article class="card reveal" role="listitem" aria-label="Procedimiento: Pestañas Clásicas">
-            <div class="card-image-wrap">
-              <img
-                src="img/pestanas-clasicas.jpg"
-                alt="Resultado de extensiones de pestañas clásicas — mirada natural y elegante"
-                class="card-img"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-              />
-              <div class="img-placeholder" style="display:none;" aria-hidden="true"><span>🖼️</span></div>
-            </div>
-            <div class="card-body">
-              <h3 class="card-title">Pestañas Clásicas</h3>
-              <p class="card-text">
+</div>
+<div class="card-body">
+<h3 class="card-title">Pestañas Clásicas</h3>
+<p class="card-text">
                 Una extensión por cada pestaña natural. Mirada natural y elegante,
                 más larga y voluminosa pero sutil.
               </p>
-              <div class="card-price">
-                <span class="price">₡22,500</span>
-              </div>
-            </div>
-          </article>
+<div class="card-price">
+<span class="price">₡22,500</span>
+</div>
+</div>
+</article>
+<!-- TARJETA: Pestañas Semi Volumen -->
+<article aria-label="Procedimiento: Pestañas Semi Volumen" class="card reveal" role="listitem">
+<div class="card-image-wrap">
+<img alt="Resultado de pestañas semi volumen" class="card-img" decoding="async" loading="lazy" src="img/pestanas-semi.jpg"/>
 
-          <!-- TARJETA: Pestañas Semi Volumen -->
-          <article class="card reveal" role="listitem" aria-label="Procedimiento: Pestañas Semi Volumen">
-            <div class="card-image-wrap">
-              <img
-                src="img/pestanas-semi.jpg"
-                alt="Resultado de pestañas semi volumen"
-                class="card-img"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-              />
-              <div class="img-placeholder" style="display:none;" aria-hidden="true"><span>🖼️</span></div>
-            </div>
-            <div class="card-body">
-              <h3 class="card-title">Pestañas Semi Volumen</h3>
-              <p class="card-text">
+</div>
+<div class="card-body">
+<h3 class="card-title">Pestañas Semi Volumen</h3>
+<p class="card-text">
                 De 2 a 3 extensiones por pestaña natural. Look más lleno y espeso sin
                 llegar al volumen total.
               </p>
-              <div class="card-price">
-                <span class="price">₡25,000</span>
-              </div>
-            </div>
-          </article>
+<div class="card-price">
+<span class="price">₡25,000</span>
+</div>
+</div>
+</article>
+<!-- TARJETA: Pestañas Volumen -->
+<article aria-label="Procedimiento: Pestañas Volumen" class="card reveal" role="listitem">
+<div class="card-image-wrap">
+<img alt="Resultado de pestañas volumen — mirada dramática" class="card-img" decoding="async" loading="lazy" src="img/pestanas-volumen.jpg"/>
 
-          <!-- TARJETA: Pestañas Volumen -->
-          <article class="card reveal" role="listitem" aria-label="Procedimiento: Pestañas Volumen">
-            <div class="card-image-wrap">
-              <img
-                src="img/pestanas-volumen.jpg"
-                alt="Resultado de pestañas volumen — mirada dramática"
-                class="card-img"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-              />
-              <div class="img-placeholder" style="display:none;" aria-hidden="true"><span>🖼️</span></div>
-            </div>
-            <div class="card-body">
-              <h3 class="card-title">Pestañas Volumen</h3>
-              <p class="card-text">
+</div>
+<div class="card-body">
+<h3 class="card-title">Pestañas Volumen</h3>
+<p class="card-text">
                 Múltiples extensiones por pestaña natural. Mirada más dramática y profunda
                 con mayor intensidad.
               </p>
-              <div class="card-price">
-                <span class="price">₡27,000</span>
-              </div>
-            </div>
-          </article>
+<div class="card-price">
+<span class="price">₡27,000</span>
+</div>
+</div>
+</article>
+<!-- TARJETA: Volumen Ruso -->
+<article aria-label="Procedimiento: Pestañas Volumen Ruso" class="card reveal" role="listitem">
+<div class="card-image-wrap">
+<img alt="Resultado de pestañas volumen ruso — look intenso y llamativo" class="card-img" decoding="async" loading="lazy" src="img/pestanas-ruso.jpg"/>
 
-          <!-- TARJETA: Volumen Ruso -->
-          <article class="card reveal" role="listitem" aria-label="Procedimiento: Pestañas Volumen Ruso">
-            <div class="card-image-wrap">
-              <img
-                src="img/pestanas-ruso.jpg"
-                alt="Resultado de pestañas volumen ruso — look intenso y llamativo"
-                class="card-img"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-              />
-              <div class="img-placeholder" style="display:none;" aria-hidden="true"><span>🖼️</span></div>
-            </div>
-            <div class="card-body">
-              <h3 class="card-title">Pestañas Volumen Ruso</h3>
-              <p class="card-text">
+</div>
+<div class="card-body">
+<h3 class="card-title">Pestañas Volumen Ruso</h3>
+<p class="card-text">
                 La técnica más avanzada. Extensiones ultra finas para un volumen extremo
                 con apariencia ligera y esponjosa.
               </p>
-              <div class="card-price">
-                <span class="price">₡35,000</span>
-              </div>
-            </div>
-          </article>
+<div class="card-price">
+<span class="price">₡35,000</span>
+</div>
+</div>
+</article>
+<!-- TARJETA: Wispy -->
+<article aria-label="Procedimiento: Pestañas Wispy" class="card reveal" role="listitem">
+<div class="card-image-wrap">
+<img alt="Resultado de pestañas wispy — efecto natural despeinado" class="card-img" decoding="async" loading="lazy" src="img/pestanas-wispy.jpg"/>
 
-          <!-- TARJETA: Wispy -->
-          <article class="card reveal" role="listitem" aria-label="Procedimiento: Pestañas Wispy">
-            <div class="card-image-wrap">
-              <img
-                src="img/pestanas-wispy.jpg"
-                alt="Resultado de pestañas wispy — efecto natural despeinado"
-                class="card-img"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-              />
-              <div class="img-placeholder" style="display:none;" aria-hidden="true"><span>🖼️</span></div>
-            </div>
-            <div class="card-body">
-              <h3 class="card-title">Pestañas Wispy</h3>
-              <p class="card-text">
+</div>
+<div class="card-body">
+<h3 class="card-title">Pestañas Wispy</h3>
+<p class="card-text">
                 Efecto desordenado y voluminoso con mezcla de longitudes. Apariencia
                 "despeinada" y natural. Look único.
               </p>
-              <div class="card-price">
-                <span class="price">₡30,000</span>
-              </div>
-            </div>
-          </article>
+<div class="card-price">
+<span class="price">₡30,000</span>
+</div>
+</div>
+</article>
+<!-- TARJETA: Encapsuladas -->
+<article aria-label="Procedimiento: Pestañas Encapsuladas" class="card reveal" role="listitem">
+<div class="card-image-wrap">
+<img alt="Resultado de pestañas encapsuladas — volumen sutil y natural" class="card-img" decoding="async" loading="lazy" src="img/pestanas-encapsuladas.jpg"/>
 
-          <!-- TARJETA: Encapsuladas -->
-          <article class="card reveal" role="listitem" aria-label="Procedimiento: Pestañas Encapsuladas">
-            <div class="card-image-wrap">
-              <img
-                src="img/pestanas-encapsuladas.jpg"
-                alt="Resultado de pestañas encapsuladas — volumen sutil y natural"
-                class="card-img"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-              />
-              <div class="img-placeholder" style="display:none;" aria-hidden="true"><span>🖼️</span></div>
-            </div>
-            <div class="card-body">
-              <h3 class="card-title">Pestañas Encapsuladas</h3>
-              <p class="card-text">
+</div>
+<div class="card-body">
+<h3 class="card-title">Pestañas Encapsuladas</h3>
+<p class="card-text">
                 Resultado sutil pero lleno de volumen. Extensiones encapsuladas con técnica
                 especial para profundidad y grosor.
               </p>
-              <div class="card-price">
-                <span class="price">₡10,000</span>
-              </div>
-            </div>
-          </article>
+<div class="card-price">
+<span class="price">₡10,000</span>
+</div>
+</div>
+</article>
+<!-- TARJETA: Lash Lifting Coreano -->
+<article aria-label="Procedimiento: Lash Lifting Coreano" class="card reveal" role="listitem">
+<div class="card-image-wrap">
+<img alt="Resultado de lash lifting coreano — pestañas curvadas y elevadas" class="card-img" decoding="async" loading="lazy" src="img/lash-lifting.jpg"/>
 
-          <!-- TARJETA: Lash Lifting Coreano -->
-          <article class="card reveal" role="listitem" aria-label="Procedimiento: Lash Lifting Coreano">
-            <div class="card-image-wrap">
-              <img
-                src="img/lash-lifting.jpg"
-                alt="Resultado de lash lifting coreano — pestañas curvadas y elevadas"
-                class="card-img"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-              />
-              <div class="img-placeholder" style="display:none;" aria-hidden="true"><span>🖼️</span></div>
-            </div>
-            <div class="card-body">
-              <h3 class="card-title">Lash Lifting Coreano</h3>
-              <p class="card-text">
+</div>
+<div class="card-body">
+<h3 class="card-title">Lash Lifting Coreano</h3>
+<p class="card-text">
                 Eleva y curva tus pestañas naturales. Mirada abierta y definida sin extensiones.
                 Efecto sutil y duradero.
               </p>
-              <div class="card-price">
-                <span class="price">₡25,000</span>
-              </div>
-            </div>
-          </article>
+<div class="card-price">
+<span class="price">₡25,000</span>
+</div>
+</div>
+</article>
+<!-- TARJETA: Depilación Láser -->
+<article aria-label="Procedimiento: Depilación con Láser" class="card reveal" role="listitem">
+<div class="card-image-wrap">
+<img alt="Tratamiento de depilación con láser" class="card-img" decoding="async" loading="lazy" src="img/depilacion-laser.jpg"/>
 
-          <!-- TARJETA: Depilación Láser -->
-          <article class="card reveal" role="listitem" aria-label="Procedimiento: Depilación con Láser">
-            <div class="card-image-wrap">
-              <img
-                src="img/depilacion-laser.jpg"
-                alt="Tratamiento de depilación con láser"
-                class="card-img"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-              />
-              <div class="img-placeholder" style="display:none;" aria-hidden="true"><span>🖼️</span></div>
-            </div>
-            <div class="card-body">
-              <h3 class="card-title">Depilación con Láser</h3>
-              <p class="card-text">
+</div>
+<div class="card-body">
+<h3 class="card-title">Depilación con Láser</h3>
+<p class="card-text">
                 Tecnología láser avanzada para una depilación duradera y efectiva.
                 Resultados visibles desde la primera sesión.
               </p>
-              <div class="card-price">
-                <span class="price">Consultar precio</span>
-              </div>
-            </div>
-          </article>
+<div class="card-price">
+<span class="price">Consultar precio</span>
+</div>
+</div>
+</article>
+<!-- TARJETA: Remoción de Cejas con Láser -->
+<article aria-label="Procedimiento: Remoción de Cejas con Láser" class="card reveal" role="listitem">
+<div class="card-image-wrap">
+<img alt="Tratamiento de remoción de micropigmentación de cejas con láser" class="card-img" decoding="async" loading="lazy" src="img/remocion-laser.jpg"/>
 
-          <!-- TARJETA: Remoción de Cejas con Láser -->
-          <article class="card reveal" role="listitem" aria-label="Procedimiento: Remoción de Cejas con Láser">
-            <div class="card-image-wrap">
-              <img
-                src="img/remocion-laser.jpg"
-                alt="Tratamiento de remoción de micropigmentación de cejas con láser"
-                class="card-img"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-              />
-              <div class="img-placeholder" style="display:none;" aria-hidden="true"><span>🖼️</span></div>
-            </div>
-            <div class="card-body">
-              <h3 class="card-title">Remoción de Cejas con Láser</h3>
-              <p class="card-text">
+</div>
+<div class="card-body">
+<h3 class="card-title">Remoción de Cejas con Láser</h3>
+<p class="card-text">
                 Eliminación segura de micropigmentación anterior o cejas tatuadas.
                 Proceso profesional y controlado.
               </p>
-              <div class="card-price">
-                <span class="price">Consultar precio</span>
-              </div>
-            </div>
-          </article>
-
-        </div><!-- /cards-grid -->
-      </div><!-- /container -->
-    </section>
-
-    <!-- ===== SECCIÓN 4: BANNER CTA (entre secciones) ============
+<div class="card-price">
+<span class="price">Consultar precio</span>
+</div>
+</div>
+</article>
+</div><!-- /cards-grid -->
+</div><!-- /container -->
+</section>
+<!-- ===== SECCIÓN 4: BANNER CTA (entre secciones) ============
          Bloque de contraste que invita a reservar.
          Inspirado en las secciones "spotlight" de Escape Velocity.
     ============================================================ -->
-    <section class="section cta-banner" aria-label="Llamado a la acción — Reservar cita">
-      <div class="container cta-inner reveal">
-        <h2 class="cta-title">¿Lista para tu transformación?</h2>
-        <p class="cta-text">Reserva tu cita hoy y da el primer paso hacia tu mejor versión.</p>
-        <a href="https://wa.me/50661971148" class="btn btn-gold" target="_blank" rel="noopener noreferrer"
-           aria-label="Reservar cita por WhatsApp con Daniela Quesada">
+<section aria-label="Llamado a la acción — Reservar cita" class="section cta-banner">
+<article class="container cta-inner reveal">
+<h2 class="cta-title">¿Lista para tu transformación?</h2>
+<p class="cta-text">Reserva tu cita hoy y da el primer paso hacia tu mejor versión.</p>
+<a aria-label="Reservar cita por WhatsApp con Daniela Quesada" class="btn btn-gold" href="https://wa.me/50661971148" rel="noopener noreferrer" target="_blank">
           📲 Reservar por WhatsApp
         </a>
-      </div>
-    </section>
-
-    <!-- ===== SECCIÓN 5: CURSOS ==================================
+</article>
+</section>
+<!-- ===== SECCIÓN 5: CURSOS ==================================
          Catálogo de cursos que imparte la academia.
          Usa Flexbox para las tarjetas de cursos.
     ============================================================ -->
-    <section id="cursos" class="section courses" aria-labelledby="courses-title">
-      <div class="container">
-        <span class="section-tag">Academia</span>
-        <h2 id="courses-title" class="section-title text-center">Cursos Profesionales</h2>
-        <p class="section-subtitle text-center">
+<section aria-labelledby="courses-title" class="section courses" id="cursos">
+<div class="container">
+<span class="section-tag">Academia</span>
+<h2 class="section-title text-center" id="courses-title">Cursos Profesionales</h2>
+<p class="section-subtitle text-center">
           Aprende de la campeona Centroamericana. Materiales incluidos y envíos a todo Costa Rica.
         </p>
+<!-- Beneficios del curso (Flexbox) -->
+<div aria-label="Beneficios de los cursos" class="benefits-bar reveal" role="group">
+<div class="benefit-item">
+<span aria-hidden="true" class="benefit-icon">📦</span>
+<span>Materiales incluidos</span>
+</div>
+<div class="benefit-item">
+<span aria-hidden="true" class="benefit-icon">🚚</span>
+<span>Envíos a todo CR</span>
+</div>
+<div class="benefit-item">
+<span aria-hidden="true" class="benefit-icon">💻</span>
+<span>Modalidad online y presencial</span>
+</div>
+<div class="benefit-item">
+<span aria-hidden="true" class="benefit-icon">📜</span>
+<span>Certificado de finalización</span>
+</div>
+</div>
+<!-- Tarjetas de cursos (Flexbox) -->
+<div class="courses-flex" role="list">
+<!-- CURSO: Microblading -->
+<article aria-label="Curso de Microblading" class="course-card reveal" role="listitem">
+<div class="course-card-img-wrap">
+<img alt="Curso de microblading — aprende la técnica semipermanente" class="course-card-img" decoding="async" loading="lazy" src="img/curso-microblading.jpg"/>
 
-        <!-- Beneficios del curso (Flexbox) -->
-        <div class="benefits-bar reveal" aria-label="Beneficios de los cursos">
-          <div class="benefit-item">
-            <span class="benefit-icon" aria-hidden="true">📦</span>
-            <span>Materiales incluidos</span>
-          </div>
-          <div class="benefit-item">
-            <span class="benefit-icon" aria-hidden="true">🚚</span>
-            <span>Envíos a todo CR</span>
-          </div>
-          <div class="benefit-item">
-            <span class="benefit-icon" aria-hidden="true">💻</span>
-            <span>Modalidad online y presencial</span>
-          </div>
-          <div class="benefit-item">
-            <span class="benefit-icon" aria-hidden="true">📜</span>
-            <span>Certificado de finalización</span>
-          </div>
-        </div>
+</div>
+<div class="course-card-body">
+<span class="course-tag">Cejas</span>
+<h3 class="course-card-title">Microblading</h3>
+<p>Aprende la técnica de trazos finos para cejas semipermanentes desde cero. Incluye práctica en piel sintética y real.</p>
+<ul aria-label="Detalles del curso" class="course-details">
+<li>⏱️ Duración: 1–2 días</li>
+<li>💻 Online o presencial</li>
+<li>📦 Kit de materiales incluido</li>
+<li>🚚 Envío a todo Costa Rica</li>
+</ul>
+<a class="btn btn-primary btn-sm" href="#contacto">Más información</a>
+</div>
+</article>
+<!-- CURSO: Efecto Polvo / Híbridas -->
+<article aria-label="Curso de Efecto Polvo e Híbridas" class="course-card reveal" role="listitem">
+<div class="course-card-img-wrap">
+<img alt="Curso de efecto polvo e híbridas" class="course-card-img" decoding="async" loading="lazy" src="img/curso-polvo.jpg"/>
 
-        <!-- Tarjetas de cursos (Flexbox) -->
-        <div class="courses-flex" role="list">
+</div>
+<div class="course-card-body">
+<span class="course-tag">Cejas</span>
+<h3 class="course-card-title">Efecto Polvo &amp; Híbridas</h3>
+<p>Domina el efecto polvo y las cejas híbridas para ofrecer más opciones a tus clientas. Aprende a combinar técnicas.</p>
+<ul aria-label="Detalles del curso" class="course-details">
+<li>⏱️ Duración: 1–2 días</li>
+<li>💻 Online o presencial</li>
+<li>📦 Kit de materiales incluido</li>
+<li>🚚 Envío a todo Costa Rica</li>
+</ul>
+<a class="btn btn-primary btn-sm" href="#contacto">Más información</a>
+</div>
+</article>
+<!-- CURSO: Full Lips -->
+<article aria-label="Curso de Full Lips" class="course-card reveal" role="listitem">
+<div class="course-card-img-wrap">
+<img alt="Curso de full lips — micropigmentación de labios" class="course-card-img" decoding="async" loading="lazy" src="img/curso-lips.jpg"/>
 
-          <!-- CURSO: Microblading -->
-          <article class="course-card reveal" role="listitem" aria-label="Curso de Microblading">
-            <div class="course-card-img-wrap">
-              <img
-                src="img/curso-microblading.jpg"
-                alt="Curso de microblading — aprende la técnica semipermanente"
-                class="course-card-img"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-              />
-              <div class="img-placeholder" style="display:none;" aria-hidden="true"><span>🎓</span></div>
-            </div>
-            <div class="course-card-body">
-              <span class="course-tag">Cejas</span>
-              <h3 class="course-card-title">Microblading</h3>
-              <p>Aprende la técnica de trazos finos para cejas semipermanentes desde cero. Incluye práctica en piel sintética y real.</p>
-              <ul class="course-details" aria-label="Detalles del curso">
-                <li>⏱️ Duración: 1–2 días</li>
-                <li>💻 Online o presencial</li>
-                <li>📦 Kit de materiales incluido</li>
-                <li>🚚 Envío a todo Costa Rica</li>
-              </ul>
-              <a href="#contacto" class="btn btn-primary btn-sm">Más información</a>
-            </div>
-          </article>
+</div>
+<div class="course-card-body">
+<span class="course-tag">Labios</span>
+<h3 class="course-card-title">Full Lips</h3>
+<p>Especialízate en micropigmentación de labios con la técnica acuarela. Teoría de color y práctica incluidas.</p>
+<ul aria-label="Detalles del curso" class="course-details">
+<li>⏱️ Duración: 1 día</li>
+<li>💻 Online o presencial</li>
+<li>📦 Kit de materiales incluido</li>
+<li>🚚 Envío a todo Costa Rica</li>
+</ul>
+<a class="btn btn-primary btn-sm" href="#contacto">Más información</a>
+</div>
+</article>
+<!-- CURSO: Lashista Completo -->
+<article aria-label="Curso completo de lashista" class="course-card reveal" role="listitem">
+<div class="course-card-img-wrap">
+<img alt="Curso completo de lashista — extensiones de pestañas" class="course-card-img" decoding="async" loading="lazy" src="img/curso-lashista.jpg"/>
 
-          <!-- CURSO: Efecto Polvo / Híbridas -->
-          <article class="course-card reveal" role="listitem" aria-label="Curso de Efecto Polvo e Híbridas">
-            <div class="course-card-img-wrap">
-              <img
-                src="img/curso-polvo.jpg"
-                alt="Curso de efecto polvo e híbridas"
-                class="course-card-img"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-              />
-              <div class="img-placeholder" style="display:none;" aria-hidden="true"><span>🎓</span></div>
-            </div>
-            <div class="course-card-body">
-              <span class="course-tag">Cejas</span>
-              <h3 class="course-card-title">Efecto Polvo & Híbridas</h3>
-              <p>Domina el efecto polvo y las cejas híbridas para ofrecer más opciones a tus clientas. Aprende a combinar técnicas.</p>
-              <ul class="course-details" aria-label="Detalles del curso">
-                <li>⏱️ Duración: 1–2 días</li>
-                <li>💻 Online o presencial</li>
-                <li>📦 Kit de materiales incluido</li>
-                <li>🚚 Envío a todo Costa Rica</li>
-              </ul>
-              <a href="#contacto" class="btn btn-primary btn-sm">Más información</a>
-            </div>
-          </article>
-
-          <!-- CURSO: Full Lips -->
-          <article class="course-card reveal" role="listitem" aria-label="Curso de Full Lips">
-            <div class="course-card-img-wrap">
-              <img
-                src="img/curso-lips.jpg"
-                alt="Curso de full lips — micropigmentación de labios"
-                class="course-card-img"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-              />
-              <div class="img-placeholder" style="display:none;" aria-hidden="true"><span>🎓</span></div>
-            </div>
-            <div class="course-card-body">
-              <span class="course-tag">Labios</span>
-              <h3 class="course-card-title">Full Lips</h3>
-              <p>Especialízate en micropigmentación de labios con la técnica acuarela. Teoría de color y práctica incluidas.</p>
-              <ul class="course-details" aria-label="Detalles del curso">
-                <li>⏱️ Duración: 1 día</li>
-                <li>💻 Online o presencial</li>
-                <li>📦 Kit de materiales incluido</li>
-                <li>🚚 Envío a todo Costa Rica</li>
-              </ul>
-              <a href="#contacto" class="btn btn-primary btn-sm">Más información</a>
-            </div>
-          </article>
-
-          <!-- CURSO: Lashista Completo -->
-          <article class="course-card reveal" role="listitem" aria-label="Curso completo de lashista">
-            <div class="course-card-img-wrap">
-              <img
-                src="img/curso-lashista.jpg"
-                alt="Curso completo de lashista — extensiones de pestañas"
-                class="course-card-img"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-              />
-              <div class="img-placeholder" style="display:none;" aria-hidden="true"><span>🎓</span></div>
-            </div>
-            <div class="course-card-body">
-              <span class="course-tag">Pestañas</span>
-              <h3 class="course-card-title">Lashista Completo</h3>
-              <p>Desde clásicas hasta volumen ruso. Aprende todas las técnicas de extensión de pestañas. Incluye Lash Lifting Coreano.</p>
-              <ul class="course-details" aria-label="Detalles del curso">
-                <li>⏱️ Duración: 3–5 días</li>
-                <li>💻 Online o presencial</li>
-                <li>📦 Kit de materiales incluido</li>
-                <li>🚚 Envío a todo Costa Rica</li>
-              </ul>
-              <a href="#contacto" class="btn btn-primary btn-sm">Más información</a>
-            </div>
-          </article>
-
-        </div><!-- /courses-flex -->
-      </div><!-- /container -->
-    </section>
-
-    <!-- ===== SECCIÓN 6: GALERÍA (zona para más imágenes) =========
+</div>
+<div class="course-card-body">
+<span class="course-tag">Pestañas</span>
+<h3 class="course-card-title">Lashista Completo</h3>
+<p>Desde clásicas hasta volumen ruso. Aprende todas las técnicas de extensión de pestañas. Incluye Lash Lifting Coreano.</p>
+<ul aria-label="Detalles del curso" class="course-details">
+<li>⏱️ Duración: 3–5 días</li>
+<li>💻 Online o presencial</li>
+<li>📦 Kit de materiales incluido</li>
+<li>🚚 Envío a todo Costa Rica</li>
+</ul>
+<a class="btn btn-primary btn-sm" href="#contacto">Más información</a>
+</div>
+</article>
+</div><!-- /courses-flex -->
+</div><!-- /container -->
+</section>
+<!-- ===== SECCIÓN 6: GALERÍA (zona para más imágenes) =========
          Cuadrícula de fotos del trabajo de la academia.
     ============================================================ -->
-    <section class="section gallery" aria-labelledby="gallery-title">
-      <div class="container">
-        <span class="section-tag">Resultados</span>
-        <h2 id="gallery-title" class="section-title text-center">Galería de Trabajos</h2>
+<section aria-labelledby="gallery-title" class="section gallery">
+<div class="container">
+<span class="section-tag">Resultados</span>
+<h2 class="section-title text-center" id="gallery-title">Galería de Trabajos</h2>
+<!-- Grid de imágenes (CSS Grid) -->
+<div aria-label="Galería de trabajos de Beauty Academy" class="gallery-grid" role="list">
+<!-- Cada elemento tiene clase reveal para animación al scroll -->
+<div class="gallery-item reveal" role="listitem">
+<img alt="Trabajo de micropigmentación de cejas" decoding="async" loading="lazy" src="img/galeria-1.jpg"/>
+</div>
+<div class="gallery-item reveal" role="listitem">
+<img alt="Resultado de extensiones de pestañas" decoding="async" loading="lazy" src="img/galeria-2.jpg"/>
+</div>
+<div class="gallery-item reveal" role="listitem">
+<img alt="Full lips micropigmentación de labios" decoding="async" loading="lazy" src="img/galeria-3.jpg"/>
+</div>
+<div class="gallery-item reveal" role="listitem">
+<img alt="Cejas híbridas resultado final" decoding="async" loading="lazy" src="img/galeria-4.jpg"/>
+</div>
+<div class="gallery-item reveal" role="listitem">
+<img alt="Pestañas volumen ruso" decoding="async" loading="lazy" src="img/galeria-5.jpg"/>
+</div>
+<div class="gallery-item reveal" role="listitem">
+<img alt="Lash lifting coreano resultado" decoding="async" loading="lazy" src="img/galeria-6.jpg"/>
+</div>
+</div><!-- /gallery-grid -->
+</div>
+</section>
 
-        <!-- Grid de imágenes (CSS Grid) -->
-        <div class="gallery-grid" role="list" aria-label="Galería de trabajos de Beauty Academy">
-
-          <!-- Cada elemento tiene clase reveal para animación al scroll -->
-          <div class="gallery-item reveal" role="listitem">
-            <img src="img/galeria-1.jpg" alt="Trabajo de micropigmentación de cejas" onerror="this.style.display='none'; this.parentElement.classList.add('placeholder-bg');" />
-          </div>
-          <div class="gallery-item reveal" role="listitem">
-            <img src="img/galeria-2.jpg" alt="Resultado de extensiones de pestañas" onerror="this.style.display='none'; this.parentElement.classList.add('placeholder-bg');" />
-          </div>
-          <div class="gallery-item reveal" role="listitem">
-            <img src="img/galeria-3.jpg" alt="Full lips micropigmentación de labios" onerror="this.style.display='none'; this.parentElement.classList.add('placeholder-bg');" />
-          </div>
-          <div class="gallery-item reveal" role="listitem">
-            <img src="img/galeria-4.jpg" alt="Cejas híbridas resultado final" onerror="this.style.display='none'; this.parentElement.classList.add('placeholder-bg');" />
-          </div>
-          <div class="gallery-item reveal" role="listitem">
-            <img src="img/galeria-5.jpg" alt="Pestañas volumen ruso" onerror="this.style.display='none'; this.parentElement.classList.add('placeholder-bg');" />
-          </div>
-          <div class="gallery-item reveal" role="listitem">
-            <img src="img/galeria-6.jpg" alt="Lash lifting coreano resultado" onerror="this.style.display='none'; this.parentElement.classList.add('placeholder-bg');" />
-          </div>
-
-        </div><!-- /gallery-grid -->
-      </div>
-    </section>
-
-    <!-- ===== SECCIÓN 7: CONTACTO ================================
-         Formulario de contacto + información directa.
+<!-- ===== SECCIÓN 7: CONTACTO — Split editorial =================
+         Fondo oscuro con gradiente. Dos paneles CSS Grid.
+         Diseño editorial: título grande itálico izquierda,
+         datos de contacto y redes a la derecha.
     ============================================================ -->
-    <section id="contacto" class="section contact" aria-labelledby="contact-title">
-      <div class="container contact-grid">
+    <section aria-labelledby="contact-title" class="section contact" id="contacto">
 
-        <!-- Columna izquierda: información de contacto -->
-        <div class="contact-info reveal">
+      <div class="contact-panels">
+
+        <!-- Panel izquierdo: título editorial + CTA -->
+        <div class="contact-panel reveal">
           <span class="section-tag">Contáctame</span>
-          <h2 id="contact-title" class="section-title">¡Hablemos!</h2>
-          <p>¿Tienes dudas sobre algún procedimiento o curso? Escríbeme con gusto.</p>
+          <h2 class="section-title" id="contact-title">¡Hablemos!</h2>
+          <p>
+            ¿Tienes dudas sobre algún procedimiento o curso?
+            Escríbeme con gusto. Estoy aquí para ayudarte.
+          </p>
+          <a
+            href="https://wa.me/50661971148"
+            class="btn btn-gold"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Reservar cita por WhatsApp"
+          >
+            📲 Reservar por WhatsApp
+          </a>
+        </div>
 
-          <ul class="contact-list" aria-label="Formas de contacto">
+        <!-- Panel derecho: datos de contacto y redes -->
+        <div class="contact-panel reveal">
+          <h3 class="contact-panel-title">Agenda tu cita</h3>
+          <p class="contact-panel-subtitle">
+            Para consultas, cursos o procedimientos,<br>utiliza los enlaces directos.
+          </p>
+
+          <ul class="contact-panel-list" aria-label="Formas de contacto">
             <li>
               <span class="contact-icon" aria-hidden="true">📞</span>
               <a href="tel:+50661971148" aria-label="Llamar al +506 6197-1148">+506 6197-1148</a>
@@ -717,170 +592,61 @@
             </li>
           </ul>
 
-          <!-- Redes sociales -->
-          <div class="social-links" aria-label="Redes sociales de Beauty Academy Daniela Quesada">
-            <a
-              href="https://instagram.com/"
-              class="social-btn"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram de Beauty Academy Daniela Quesada"
-            >
-              <!-- Ícono SVG de Instagram (accesible, sin imagen externa) -->
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-              </svg>
+          <div class="contact-divider" aria-hidden="true"></div>
+
+          <nav class="social-links" aria-label="Redes sociales de Beauty Academy Daniela Quesada">
+            <a class="social-btn" href="https://instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Beauty Academy Daniela Quesada">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
               Instagram
             </a>
-            <a
-              href="https://facebook.com/"
-              class="social-btn"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook de Beauty Academy Daniela Quesada"
-            >
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-              </svg>
+            <a class="social-btn" href="https://facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook de Beauty Academy Daniela Quesada">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
               Facebook
             </a>
-            <a
-              href="https://tiktok.com/"
-              class="social-btn"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="TikTok de Beauty Academy Daniela Quesada"
-            >
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
-                <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
-              </svg>
+            <a class="social-btn" href="https://tiktok.com/" target="_blank" rel="noopener noreferrer" aria-label="TikTok de Beauty Academy Daniela Quesada">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
               TikTok
             </a>
-          </div>
-        </div><!-- /contact-info -->
+          </nav>
+        </div>
 
-        <!-- Columna derecha: formulario de contacto -->
-        <div class="contact-form-wrap reveal">
-          <h3 class="form-title">Envíame un mensaje</h3>
-
-          <!-- El formulario guarda el nombre en localStorage para recordarlo -->
-          <div class="contact-form" role="form" aria-label="Formulario de contacto">
-
-            <div class="form-group">
-              <label for="contactName">Tu nombre</label>
-              <input
-                type="text"
-                id="contactName"
-                name="name"
-                placeholder="¿Cómo te llamas?"
-                autocomplete="name"
-                aria-describedby="nameHint"
-              />
-              <span id="nameHint" class="form-hint">Tu nombre se guardará para la próxima visita.</span>
-            </div>
-
-            <div class="form-group">
-              <label for="contactEmail">Correo electrónico</label>
-              <input
-                type="email"
-                id="contactEmail"
-                name="email"
-                placeholder="tucorreo@ejemplo.com"
-                autocomplete="email"
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="contactService">Servicio de interés</label>
-              <select id="contactService" name="service" aria-label="Selecciona un servicio">
-                <option value="">Selecciona un servicio…</option>
-                <option value="microblading">Microblading</option>
-                <option value="efecto-polvo">Efecto Polvo</option>
-                <option value="hibridas">Híbridas</option>
-                <option value="full-lips">Full Lips</option>
-                <option value="pestanas">Extensiones de Pestañas</option>
-                <option value="lash-lifting">Lash Lifting Coreano</option>
-                <option value="laser">Depilación / Remoción Láser</option>
-                <option value="curso">Curso Profesional</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="contactMessage">Mensaje</label>
-              <textarea
-                id="contactMessage"
-                name="message"
-                rows="4"
-                placeholder="¿En qué puedo ayudarte?"
-                aria-label="Escribe tu mensaje"
-              ></textarea>
-            </div>
-
-            <!-- El botón dispara la función de envío en script.js -->
-            <button
-              type="button"
-              id="submitContact"
-              class="btn btn-primary btn-full"
-              aria-label="Enviar mensaje de contacto"
-            >
-              Enviar mensaje
-            </button>
-
-            <!-- Mensaje de confirmación (oculto por defecto, visible tras envío) -->
-            <p id="formSuccess" class="form-success" role="alert" aria-live="polite" style="display:none;">
-              ✅ ¡Gracias! Tu mensaje fue enviado. Te contactaré pronto.
-            </p>
-
-          </div><!-- /contact-form -->
-        </div><!-- /contact-form-wrap -->
-
-      </div><!-- /contact-grid -->
+      </div><!-- /contact-panels -->
     </section>
-
-  </main><!-- /main -->
-
-  <!-- ============================================================
+</main><!-- /main -->
+<!-- ============================================================
        FOOTER
        Información de cierre: copyright y redes sociales.
   ============================================================ -->
-  <footer class="site-footer" role="contentinfo">
-    <div class="footer-inner container">
-
-      <div class="footer-brand">
-        <span class="logo-text">Beauty Academy</span>
-        <span class="logo-sub">Daniela Quesada</span>
-        <p class="footer-tagline">Potenciando tu belleza natural desde Costa Rica 🇨🇷</p>
-      </div>
-
-      <nav class="footer-nav" aria-label="Navegación del pie de página">
-        <a href="#inicio">Inicio</a>
-        <a href="#sobre-mi">Sobre mí</a>
-        <a href="#procedimientos">Procedimientos</a>
-        <a href="#cursos">Cursos</a>
-        <a href="#contacto">Contacto</a>
-      </nav>
-
-      <div class="footer-social" aria-label="Redes sociales">
-        <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-        </a>
-        <a href="https://facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-        </a>
-        <a href="https://tiktok.com/" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
-        </a>
-      </div>
-
-    </div><!-- /footer-inner -->
-
-    <div class="footer-bottom">
-      <p>&copy; 2026 Beauty Academy Daniela Quesada · Todos los derechos reservados · Costa Rica</p>
-    </div>
-  </footer>
-
-  <!-- JavaScript externo (requisito del laboratorio: JS en archivo separado) -->
-  <script src="js/script.js"></script>
-
+<footer class="site-footer" role="contentinfo">
+<div class="footer-inner container">
+<div class="footer-brand">
+  <img alt="Logo de Beauty Academy Daniela Quesada" class="logo-footer" decoding="async" loading="lazy" src="img/logo.webp"/>
+<p class="footer-tagline">Potenciando tu belleza natural desde Costa Rica 🇨🇷</p>
+</div>
+<nav aria-label="Navegación del pie de página" class="footer-nav">
+<a href="#inicio">Inicio</a>
+<a href="#sobre-mi">Sobre mí</a>
+<a href="#procedimientos">Procedimientos</a>
+<a href="#cursos">Cursos</a>
+<a href="#contacto">Contacto</a>
+</nav>
+<div aria-label="Redes sociales" class="footer-social">
+<a aria-label="Instagram" href="https://instagram.com/" rel="noopener noreferrer" target="_blank">
+<svg aria-hidden="true" fill="currentColor" height="20" viewbox="0 0 24 24" width="20"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+</a>
+<a aria-label="Facebook" href="https://facebook.com/" rel="noopener noreferrer" target="_blank">
+<svg aria-hidden="true" fill="currentColor" height="20" viewbox="0 0 24 24" width="20"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+</a>
+<a aria-label="TikTok" href="https://tiktok.com/" rel="noopener noreferrer" target="_blank">
+<svg aria-hidden="true" fill="currentColor" height="20" viewbox="0 0 24 24" width="20"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"></path></svg>
+</a>
+</div>
+</div><!-- /footer-inner -->
+<div class="footer-bottom">
+<p>© 2026 Beauty Academy Daniela Quesada · Todos los derechos reservados · Costa Rica</p>
+</div>
+</footer>
+<!-- JavaScript externo (requisito del laboratorio: JS en archivo separado) -->
+<script src="js/script.js"></script>
 </body>
 </html>
