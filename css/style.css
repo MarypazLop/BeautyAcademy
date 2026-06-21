@@ -90,7 +90,7 @@
 
   /* — Imagen de fondo del Hero —
      PARA CAMBIAR EL FONDO DEL HERO: actualiza esta variable con la ruta de tu imagen */
-  --hero-bg: url('../img/header2.webp');
+  --hero-bg: url('../assets/img/header2.webp');
 
   /* — Altura del navbar (usada para offset del scroll) — */
   --navbar-h: 70px;
@@ -186,6 +186,19 @@ p:last-child { margin-bottom: 0; }
 }
 
 .text-center { text-align: center; }
+
+/* Iconos SVG que reemplazan los emojis.
+   Usan 'em' para adaptarse al tamaño de fuente de su contexto,
+   igual que hacía el emoji que reemplazan. */
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
 
 /* Etiqueta pequeña que va encima de los títulos de sección */
 .section-tag {
@@ -411,11 +424,11 @@ p:last-child { margin-bottom: 0; }
 
 /* Links blancos sobre hero oscuro */
 .nav-link {
-  font-family: var(--font-body);
-  font-size: var(--fs-sm);
+  font-family: var(--font-display);
+  font-size: var(--fs-base);
   font-weight: 400;
   letter-spacing: 0.03em;
-  color: rgba(255, 255, 255, 0.88);
+  color: rgba(248, 217, 239, 0.88);
   position: relative;
   padding-bottom: 3px;
   white-space: nowrap;
@@ -740,7 +753,8 @@ body.dark-mode .hamburger-line {
 }
 
 .achievement-icon {
-  font-size: 1.2rem;
+  width: 1.2rem;
+  height: 1.2rem;
   flex-shrink: 0;  /* El ícono no se encoge */
   margin-top: 2px;
 }
@@ -907,7 +921,8 @@ body.dark-mode .cta-banner {
 }
 
 .benefit-icon {
-  font-size: 1.4rem;
+  width: 1.4rem;
+  height: 1.4rem;
 }
 
 /* Tarjetas de curso — Flexbox con wrap */
@@ -938,8 +953,24 @@ body.dark-mode .cta-banner {
 }
 
 .course-card-img-wrap {
+  position: relative;
   height: 200px;
   overflow: hidden;
+}
+
+/* Filtro translúcido sobre la foto: blanco ligero en modo claro,
+   negro ligero en modo oscuro. La imagen sigue viéndose debajo. */
+.course-card-img-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.22);
+  transition: background-color var(--transition);
+  pointer-events: none;
+}
+
+body.dark-mode .course-card-img-wrap::after {
+  background-color: rgba(0, 0, 0, 0.35);
 }
 
 .course-card-img {
@@ -1024,13 +1055,20 @@ body.dark-mode .cta-banner {
 
 .carousel-slide {
   min-width: 100%;
-  height: 420px;
+  aspect-ratio: 4 / 5;
+  /* Fondo suave detrás de la foto: como las fotos tienen proporciones
+     muy distintas entre sí, "contain" evita que se recorten, y el
+     fondo rellena el espacio que pueda quedar libre a los lados. */
+  background-color: var(--bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .carousel-slide img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* La imagen completa siempre visible, sin cortes */
   display: block;
 }
 
@@ -1093,19 +1131,32 @@ body.dark-mode .cta-banner {
   background-color: var(--bg-secondary);
 }
 
+/* Grid de 2 columnas iguales: video horizontal a la izquierda, mapa a la derecha.
+   align-items: stretch hace que ambos bloques midan el mismo alto. */
 .tour-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  align-items: stretch;
   gap: var(--space-md);
   margin-top: var(--space-lg);
 }
 
 .tour-video-wrap,
 .tour-map-wrap {
+  margin: 0; /* reset del margin por defecto de <figure> */
   border-radius: var(--radius-md);
   overflow: hidden;
   aspect-ratio: 16 / 9;
   box-shadow: var(--shadow-md);
+}
+
+/* El video es horizontal: object-fit: cover evita deformación
+   y asegura que llene completamente su contenedor 16:9 */
+.tour-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .tour-iframe {
@@ -1138,7 +1189,7 @@ body.dark-mode .cta-banner {
 .contact-simple {
   position: relative;
   z-index: 1;
-  max-width: 460px;
+  max-width: 380px;
   margin-inline: auto;
   text-align: center;
   padding: var(--space-lg) var(--space-md);
@@ -1165,7 +1216,7 @@ body.dark-mode .cta-banner {
 .contact-simple-links {
   display: flex;
   justify-content: center;
-  gap: var(--space-lg);
+  gap: var(--space-md);
   margin-bottom: var(--space-lg);
   flex-wrap: wrap;
 }
@@ -1218,6 +1269,13 @@ body.dark-mode .cta-banner {
   align-items: flex-start;
   gap: var(--space-lg);
   padding-block: var(--space-xl);
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .footer-brand .logo-text {
@@ -1415,10 +1473,7 @@ body.dark-mode .cta-banner {
     height: 350px;
   }
 
-  /* Carousel: botones más pequeños en tablet */
-  .carousel-slide {
-    height: 320px;
-  }
+  /* Carousel: en tablet el slide se mantiene en 4:5, se reduce su ancho con --space-md */
 
   /* Tour grid: una columna */
   .tour-grid {
@@ -1448,9 +1503,9 @@ body.dark-mode .cta-banner {
     align-items: center;
   }
 
-  /* Carousel: altura reducida en móvil */
+  /* Carousel: proporción más compacta (cuadrada) en móvil */
   .carousel-slide {
-    height: 240px;
+    aspect-ratio: 1 / 1;
   }
 
   .carousel-btn {
