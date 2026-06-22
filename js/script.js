@@ -1,8 +1,4 @@
-/**
- * script.js — Beauty Academy Daniela Quesada
- * Laboratorio #1 — ISW-521 Programación en Ambiente Web I
- *
- * FUNCIONALIDADES:
+/** FUNCIONALIDADES:
  * 1. Menú hamburguesa (abrir/cerrar en móvil)
  * 2. Scroll suave a las secciones (smooth scroll)
  * 3. Header con sombra al hacer scroll
@@ -13,18 +9,18 @@
  */
 
 
-/* ================================================================
+/* 
    ESPERAR A QUE EL DOM ESTÉ LISTO
    DOMContentLoaded se dispara cuando el HTML fue parseado completamente.
    Es buena práctica envolver todo el código en este evento.
-================================================================ */
+ */
 document.addEventListener('DOMContentLoaded', function () {
 
-  /* ============================================================
-     1. MENÚ HAMBURGUESA
+  /* 
+     1. Menú hamburguesa (toggle)
      Al hacer clic en el botón, se alternan las clases 'open'
      tanto en el botón como en el menú, lo que activa la animación CSS.
-  ============================================================ */
+   */
   const navToggle = document.getElementById('navToggle');
   const navMenu   = document.getElementById('navMenu');
 
@@ -64,11 +60,11 @@ document.addEventListener('DOMContentLoaded', function () {
   } // fin if navToggle
 
 
-  /* ============================================================
-     2. SCROLL SUAVE (Smooth Scroll)
+  /* 
+     2. Scroll suave (Smooth Scroll)
      Intercepta los clics en enlaces con href="#seccion" y hace
      un desplazamiento animado hasta el destino.
-  ============================================================ */
+   */
   const allAnchorLinks = document.querySelectorAll('a[href^="#"]');
 
   allAnchorLinks.forEach(function (anchor) {
@@ -98,10 +94,10 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
 
-  /* ============================================================
-     3. HEADER CON SOMBRA AL HACER SCROLL
+  /* 
+     3. Header con sombra al hacer scroll
      Añade la clase 'scrolled' al header cuando el usuario baja.
-  ============================================================ */
+   */
   const siteHeader = document.getElementById('site-header');
 
   if (siteHeader) {
@@ -117,12 +113,12 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 
-  /* ============================================================
-     4. ANIMACIONES AL ENTRAR EN EL VIEWPORT (Reveal)
+  /* 
+     4. Animaciones al entrar en el viewport (Reveal)
      IntersectionObserver "observa" elementos con clase 'reveal'.
      Cuando un elemento entra en pantalla, se le añade 'visible',
      lo que activa la transición CSS definida en style.css.
-  ============================================================ */
+   */
 
   // Seleccionamos todos los elementos que queremos animar
   const revealElements = document.querySelectorAll('.reveal');
@@ -154,17 +150,17 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
 
-  /* ============================================================
-     5. CAMBIO DE TEMA CLARO / OSCURO — Slider Toggle
+  /* 
+     5. Cambio de tema claro / oscuro — Slider Toggle
      
      El botón #themeToggle tiene un slider visual (track + thumb).
      El CSS mueve el thumb automáticamente cuando body tiene
      la clase 'dark-mode' — no necesitamos cambiar íconos.
      
-     Solo manejamos:
+     Solo maneja:
      - Añadir/quitar clase 'dark-mode' en el <body>
      - Guardar/leer la preferencia en localStorage
-  ============================================================ */
+ */
   const themeToggle = document.getElementById('themeToggle');
 
   /* Activa modo oscuro: añade clase + guarda en localStorage */
@@ -197,8 +193,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 
-  /* ============================================================
-     6. CAROUSEL DE GALERÍA
+  /* 
+     6. Carousel de galería
      Muestra una imagen a la vez; botones prev/next y puntos.
   ============================================================ */
   const carouselTrack = document.getElementById('galleryTrack');
@@ -231,12 +227,12 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 
-  /* ============================================================
-     7. RECORDAR NOMBRE EN EL FORMULARIO (localStorage)
+  /* 
+     7. Recordar nombre en el formularo (localStorage)
      Cuando el usuario escribe su nombre en el campo de contacto,
      lo guardamos. Al recargar la página, el campo ya tiene el nombre.
      Esto demuestra persistencia de datos con Web Storage.
-  ============================================================ */
+ */
   const nameInput = document.getElementById('contactName');
 
   if (nameInput) {
@@ -260,11 +256,11 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 
-  /* ============================================================
-     8. SIMULACIÓN DE ENVÍO DEL FORMULARIO
+  /* 
+     8. Simulación de envío del formulario
      Como no hay backend, simplemente mostramos un mensaje de éxito.
      En un proyecto real, aquí iría un fetch() a una API.
-  ============================================================ */
+ */
   const submitBtn    = document.getElementById('submitContact');
   const formSuccess  = document.getElementById('formSuccess');
   const emailInput   = document.getElementById('contactEmail');
@@ -305,9 +301,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 
-  /* ============================================================
-     NOTA PARA LA DEFENSA:
-     
+  /* 
      ¿Cuál es la diferencia entre localStorage y sessionStorage?
      
      - localStorage: los datos PERSISTEN aunque se cierre el navegador.
@@ -317,9 +311,8 @@ document.addEventListener('DOMContentLoaded', function () {
      - sessionStorage: los datos se borran al CERRAR la pestaña/navegador.
        Útil para información temporal de sesión.
      
-     Elegimos localStorage porque queremos que la preferencia de tema
-     y el nombre del usuario se recuerden entre visitas.
-  ============================================================ */
+     Se usa localStorage porque queremos que la preferencia de tema
+     y el nombre del usuario se recuerden entre visitas. */
 
 
 }); // fin DOMContentLoaded

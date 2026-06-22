@@ -1,8 +1,4 @@
-/* ================================================================
-   style.css — Beauty Academy Daniela Quesada
-   Laboratorio #1 — ISW-521 Programación en Ambiente Web I
-   
-   ESTRUCTURA DE ESTE ARCHIVO:
+/* ESTRUCTURA:
    1. Variables CSS (colores, tipografía, espaciado)
    2. Reset y estilos base
    3. Tipografía
@@ -19,15 +15,13 @@
    14. Footer (Flexbox)
    15. Animaciones
    16. Media Queries (breakpoints responsivos)
-   17. Modo oscuro
-================================================================ */
+   17. Modo oscuro */
 
-
-/* ================================================================
+/*
    1. VARIABLES CSS
    Centraliza todos los colores y valores repetidos.
    Cambiar aquí afecta toda la página automáticamente.
-================================================================ */
+ */
 :root {
   /* — Paleta de colores (tema claro) — */
   --color-rose:       #e8a4b8;   /* Rosa principal de la academia */
@@ -97,10 +91,10 @@
 }
 
 
-/* ================================================================
+/* 
    2. RESET Y ESTILOS BASE
    Elimina estilos predeterminados del navegador para empezar limpio.
-================================================================ */
+ */
 *,
 *::before,
 *::after {
@@ -157,9 +151,9 @@ button {
 
 
 
-/* ================================================================
+/* 
    3. TIPOGRAFÍA
-================================================================ */
+ */
 h1, h2, h3, h4 {
   font-family: var(--font-display);
   font-weight: 600;
@@ -175,9 +169,7 @@ p { margin-bottom: var(--space-sm); }
 p:last-child { margin-bottom: 0; }
 
 
-/* ================================================================
-   4. UTILIDADES
-================================================================ */
+/* 4. UTILIDADES */
 .container {
   /* Limita el ancho máximo y centra el contenido */
   max-width: 1100px;
@@ -314,7 +306,7 @@ p:last-child { margin-bottom: 0; }
 }
 
 
-/* ================================================================
+/* 
    5. HEADER & NAV — FLEXBOX
    
    DISEÑO:
@@ -322,7 +314,7 @@ p:last-child { margin-bottom: 0; }
    - La .navbar es la "cápsula" (pill) flotante centrada dentro del header.
    - Al hacer scroll, SOLO la pill cambia de apariencia (no el header).
    - Así no hay descuadre: el header siempre mide lo mismo.
-================================================================ */
+ */
 
 /* El header es solo un contenedor transparente — nunca cambia de tamaño */
 #site-header {
