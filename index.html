@@ -19,8 +19,40 @@
     />
     <!-- Hoja de estilos externa (requisito del laboratorio: CSS en archivo separado) -->
     <link href="css/style.css" rel="stylesheet" />
+    <!--
+       Aplica las preferencias de accesibilidad guardadas (tamaño de letra,
+       alto contraste, subrayado de enlaces, reducir movimiento) ANTES de
+       que se pinte la página, para evitar el "parpadeo" de ver el sitio
+       normal por un instante y luego cambiar de tamaño/color.
+       Esto se ejecuta aparte de js/accessibility.js (que maneja los clics
+       del panel) porque debe correr lo antes posible.
+    -->
+    <script>
+      (function () {
+        var html = document.documentElement;
+        var fontClasses = ['', 'a11y-font-md', 'a11y-font-lg', 'a11y-font-xl'];
+        var level = parseInt(localStorage.getItem('a11y-font-level'), 10);
+        if (!isNaN(level) && fontClasses[level]) {
+          html.classList.add(fontClasses[level]);
+        }
+        if (localStorage.getItem('a11y-contrast') === '1') {
+          html.classList.add('a11y-contrast');
+        }
+        if (localStorage.getItem('a11y-underline') === '1') {
+          html.classList.add('a11y-underline-links');
+        }
+        if (localStorage.getItem('a11y-reduce-motion') === '1') {
+          html.classList.add('a11y-reduce-motion');
+        }
+      })();
+    </script>
   </head>
   <body>
+    <!-- Enlace "Saltar al contenido principal": invisible hasta que
+         recibe foco con la tecla Tab. Es el PRIMER elemento del body
+         a propósito, para que quien navega con teclado o lector de
+         pantalla no tenga que pasar por todo el menú cada vez. -->
+    <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
     <!-- 
        El <header> contiene la barra de navegación principal.
        El <nav> agrupa los enlaces de navegación (semántica HTML5).
@@ -1348,7 +1380,113 @@
         </p>
       </div>
     </footer>
+    <!-- 
+       PANEL DE ACCESIBILIDAD
+       Botón flotante siempre visible + panel con controles de
+       tamaño de letra, alto contraste, subrayado de enlaces,
+       reducir movimiento y lectura en voz alta de cada sección.
+       La lógica vive en js/accessibility.js
+    -->
+    <button
+      aria-controls="a11yPanel"
+      aria-expanded="false"
+      aria-label="Abrir opciones de accesibilidad"
+      class="a11y-fab"
+      id="a11yToggle"
+      title="Accesibilidad"
+      type="button"
+    >
+      <!-- Ícono de figura humana dentro de un círculo (símbolo universal de accesibilidad) -->
+      <svg aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
+        <path
+          d="M12 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm9 7.5-5.5 1v3.2l3.1 6.4-1.8.9-2.8-5.8-2-1.1v3.4l2 4.9-1.9.7-2-5h-.2l-2 5-1.9-.7 2-4.9v-3.4l-2 1.1-2.8 5.8-1.8-.9 3.1-6.4V10.5L3 9.5 3.4 7.6 9 8.8c1.9.5 4.1.5 6 0l5.6-1.2.4 1.9z"
+        ></path>
+      </svg>
+    </button>
+
+    <section
+      aria-label="Panel de opciones de accesibilidad"
+      class="a11y-panel"
+      hidden
+      id="a11yPanel"
+    >
+      <h2>Accesibilidad</h2>
+
+      <div class="a11y-group">
+        <span class="a11y-group-label" id="a11yFontLabel">Tamaño de letra</span>
+        <div aria-labelledby="a11yFontLabel" class="a11y-row" role="group">
+          <button class="a11y-btn" id="a11yFontDec" type="button">A-</button>
+          <button class="a11y-btn" id="a11yFontReset" type="button">A</button>
+          <button class="a11y-btn" id="a11yFontInc" type="button">A+</button>
+        </div>
+      </div>
+
+      <div class="a11y-group">
+        <span class="a11y-group-label">Visualización</span>
+        <div class="a11y-row">
+          <button
+            aria-pressed="false"
+            class="a11y-btn a11y-btn-wide"
+            id="a11yContrast"
+            type="button"
+          >
+            Alto contraste
+          </button>
+          <button
+            aria-pressed="false"
+            class="a11y-btn a11y-btn-wide"
+            id="a11yUnderline"
+            type="button"
+          >
+            Subrayar enlaces
+          </button>
+          <button
+            aria-pressed="false"
+            class="a11y-btn a11y-btn-wide"
+            id="a11yMotion"
+            type="button"
+          >
+            Reducir movimiento
+          </button>
+        </div>
+      </div>
+
+      <div class="a11y-group">
+        <span class="a11y-group-label" id="a11yReadLabel">
+          Leer la página en voz alta
+        </span>
+        <div aria-labelledby="a11yReadLabel" class="a11y-row" role="group">
+          <button
+            aria-pressed="false"
+            class="a11y-btn a11y-btn-wide"
+            id="a11yReadToggle"
+            type="button"
+          >
+            ▶ Leer la página
+          </button>
+          <button class="a11y-btn" id="a11yReadPrev" type="button">
+            ⏮ Anterior
+          </button>
+          <button class="a11y-btn" id="a11yReadStop" type="button">
+            ⏹ Detener
+          </button>
+          <button class="a11y-btn" id="a11yReadNext" type="button">
+            ⏭ Siguiente
+          </button>
+        </div>
+        <p class="a11y-note">Lee en orden cada sección de la página.</p>
+        <p aria-live="polite" class="a11y-status" id="a11yStatus"></p>
+      </div>
+
+      <div class="a11y-group">
+        <button class="a11y-btn a11y-btn-wide" id="a11yResetAll" type="button">
+          Restablecer todo
+        </button>
+      </div>
+    </section>
+
     <!-- JavaScript externo (requisito del laboratorio: JS en archivo separado) -->
     <script src="js/script.js" defer></script>
+    <script src="js/accessibility.js" defer></script>
   </body>
 </html>

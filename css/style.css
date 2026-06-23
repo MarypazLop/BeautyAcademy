@@ -15,7 +15,9 @@
    14. Footer (Flexbox)
    15. Animaciones
    16. Media Queries (breakpoints responsivos)
-   17. Modo oscuro */
+   17. Modo oscuro
+   18. Accesibilidad (toolbar, tamaño de letra, alto contraste,
+       reducir movimiento, lectura en voz alta) */
 
 /*
    1. VARIABLES CSS
@@ -1620,4 +1622,331 @@ body.dark-mode .footer-inner .social-btn {
   background-color: rgba(255, 255, 255, 0.06);
   border-color: rgba(255, 255, 255, 0.15);
   color: rgba(255, 255, 255, 0.75);
+}
+
+
+/* ================================================================
+   18. ACCESIBILIDAD
+   Todo lo relacionado con el panel de accesibilidad:
+   - Enlace "Saltar al contenido"
+   - Clase utilitaria para texto solo-lector-de-pantalla
+   - Botón flotante + panel de opciones
+   - Tamaño de letra (3 niveles + normal)
+   - Modo de alto contraste
+   - Reducir movimiento/animaciones
+   - Resaltado de la sección que se está leyendo en voz alta
+================================================================ */
+
+/* --- Utilidad: oculto visualmente pero disponible para lectores
+       de pantalla (NO usar display:none, eso lo oculta también
+       para los lectores de pantalla) --- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --- Enlace "Saltar al contenido principal" ---
+   Invisible hasta que recibe foco con Tab (primer elemento de la página).
+   Esencial para personas que navegan solo con teclado o lector de pantalla,
+   para que no tengan que pasar por todo el menú en cada página. */
+.skip-link {
+  position: absolute;
+  top: -3rem;
+  left: var(--space-sm);
+  z-index: 1100;
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: var(--space-sm);
+  outline: 3px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* ----------------------------------------------------------------
+   BOTÓN FLOTANTE DE ACCESIBILIDAD
+   Siempre visible, esquina inferior izquierda (no choca con
+   WhatsApp/redes que suelen ir a la derecha en otros sitios).
+---------------------------------------------------------------- */
+.a11y-fab {
+  position: fixed;
+  bottom: var(--space-sm);
+  left: var(--space-sm);
+  z-index: 1200;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+  transition: transform var(--transition), background-color var(--transition);
+}
+
+.a11y-fab:hover {
+  background-color: var(--color-rose-dark);
+  transform: scale(1.06);
+}
+
+.a11y-fab:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+.a11y-fab svg {
+  width: 26px;
+  height: 26px;
+}
+
+/* ----------------------------------------------------------------
+   PANEL DE OPCIONES
+---------------------------------------------------------------- */
+.a11y-panel {
+  position: fixed;
+  bottom: calc(var(--space-sm) + 64px);
+  left: var(--space-sm);
+  z-index: 1200;
+  width: min(320px, calc(100vw - 2rem));
+  max-height: min(80vh, 560px);
+  overflow-y: auto;
+  background-color: var(--color-white);
+  color: var(--color-dark);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-md);
+  border: 1px solid var(--color-gray-light);
+}
+
+.a11y-panel[hidden] {
+  display: none;
+}
+
+.a11y-panel h2 {
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+  color: var(--color-dark);
+}
+
+.a11y-group {
+  margin-bottom: var(--space-md);
+}
+
+.a11y-group:last-child {
+  margin-bottom: 0;
+}
+
+.a11y-group-label {
+  display: block;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--color-gray);
+  margin-bottom: 0.5rem;
+}
+
+.a11y-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* Botones genéricos del panel */
+.a11y-btn {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--color-dark);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--color-gray-light);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 0.85rem;
+  cursor: pointer;
+  flex: 1 1 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  transition: background-color var(--transition), color var(--transition);
+}
+
+.a11y-btn:hover {
+  background-color: var(--color-rose-light);
+}
+
+.a11y-btn:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* Estado "activo" (aria-pressed="true") de los toggles */
+.a11y-btn[aria-pressed='true'] {
+  background-color: var(--color-rose-dark);
+  color: var(--color-white);
+  border-color: var(--color-rose-dark);
+}
+
+.a11y-btn-wide {
+  flex: 1 1 100%;
+}
+
+/* Texto de estado de la lectura en voz alta (aria-live) */
+.a11y-status {
+  font-size: var(--fs-xs);
+  color: var(--color-gray);
+  margin-top: 0.5rem;
+  min-height: 1.2em;
+}
+
+.a11y-note {
+  font-size: var(--fs-xs);
+  color: var(--color-gray);
+  margin-top: 0.4rem;
+}
+
+/* ----------------------------------------------------------------
+   TAMAÑO DE LETRA
+   Al aplicarse en <html>, escala TODO el sitio porque los tamaños
+   de fuente del proyecto están definidos en rem (relativos a la
+   raíz). Así crece también el espaciado, manteniendo proporciones.
+---------------------------------------------------------------- */
+html.a11y-font-md {
+  font-size: 112.5%; /* ~18px en vez de 16px */
+}
+
+html.a11y-font-lg {
+  font-size: 125%; /* ~20px */
+}
+
+html.a11y-font-xl {
+  font-size: 137.5%; /* ~22px */
+}
+
+/* ----------------------------------------------------------------
+   ALTO CONTRASTE
+   Redefine las variables de color principales. Como casi todo el
+   sitio usa var(--color-*) y var(--text-*), un solo cambio aquí
+   se propaga a la página completa.
+---------------------------------------------------------------- */
+html.a11y-contrast {
+  --bg-primary: #ffffff;
+  --bg-secondary: #ffffff;
+  --bg-dark: #000000;
+  --text-primary: #000000;
+  --text-secondary: #000000;
+  --text-on-dark: #ffffff;
+  --color-rose: #7a1438;
+  --color-rose-dark: #5c0f2a;
+  --color-rose-light: #ffffff;
+  --color-gold: #5c4500;
+  --color-gold-light: #5c4500;
+  --color-white: #ffffff;
+  --color-off-white: #ffffff;
+  --color-dark: #000000;
+  --color-gray: #000000;
+  --color-gray-light: #555555;
+  --color-darker-pink: #5c0f2a;
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+}
+
+/* Subraya todos los enlaces: en alto contraste no basta con el color
+   para distinguir un enlace de texto normal */
+html.a11y-contrast a {
+  text-decoration: underline;
+}
+
+/* Bordes visibles en tarjetas para no depender solo de la sombra,
+   que se elimina en este modo */
+html.a11y-contrast .card,
+html.a11y-contrast .course-card,
+html.a11y-contrast .benefits-bar,
+html.a11y-contrast .a11y-panel {
+  border: 2px solid #000000;
+}
+
+/* Overlay del hero más oscuro para que el texto blanco resalte
+   incluso más sobre la foto de fondo */
+html.a11y-contrast .hero-overlay {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+/* Foco siempre muy visible en alto contraste */
+html.a11y-contrast *:focus-visible {
+  outline: 3px solid #ffd400 !important;
+  outline-offset: 3px !important;
+}
+
+/* ----------------------------------------------------------------
+   SUBRAYAR ENLACES (independiente del alto contraste)
+   Ayuda a personas con baja visión o dificultades para distinguir
+   colores a identificar qué texto es un enlace.
+---------------------------------------------------------------- */
+html.a11y-underline-links a {
+  text-decoration: underline !important;
+}
+
+/* ----------------------------------------------------------------
+   REDUCIR MOVIMIENTO
+   Apaga animaciones, transiciones y el scroll suave para personas
+   con mareo/vértigo inducido por movimiento (trastorno vestibular)
+   o que simplemente prefieren una interfaz más calmada.
+---------------------------------------------------------------- */
+html.a11y-reduce-motion,
+html.a11y-reduce-motion * ,
+html.a11y-reduce-motion *::before,
+html.a11y-reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+html.a11y-reduce-motion .hero {
+  background-attachment: scroll; /* apaga el efecto parallax */
+}
+
+/* ----------------------------------------------------------------
+   RESALTADO DE LECTURA EN VOZ ALTA
+   Se añade con JS a la sección que se está leyendo en este momento,
+   para que las personas con baja visión (que sí pueden ver pantalla
+   pero usan el lector de apoyo) sigan visualmente el texto leído.
+---------------------------------------------------------------- */
+.a11y-reading {
+  outline: 3px dashed var(--color-gold);
+  outline-offset: 6px;
+  border-radius: var(--radius-sm);
+}
+
+/* En móviles muy angostos, el panel ocupa casi todo el ancho */
+@media (max-width: 420px) {
+  .a11y-panel {
+    left: var(--space-xs);
+    right: var(--space-xs);
+    bottom: calc(var(--space-xs) + 64px);
+    width: auto;
+  }
+
+  .a11y-fab {
+    left: var(--space-xs);
+    bottom: var(--space-xs);
+  }
 }
