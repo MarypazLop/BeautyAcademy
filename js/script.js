@@ -195,35 +195,81 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* 
      6. Carousel de galería
-     Muestra una imagen a la vez; botones prev/next y puntos.
+     Se mueve automáticamente en bucle infinito. Las imágenes se duplican
+     para que el movimiento sea continuo, sin que el usuario tenga que tocarlo.
   ============================================================ */
   const carouselTrack = document.getElementById('galleryTrack');
-  const carouselDots  = document.getElementById('galleryDots');
-  const carouselPrev  = document.getElementById('galleryPrev');
-  const carouselNext  = document.getElementById('galleryNext');
+  const galleryCarousel = document.querySelector('.gallery-carousel');
 
-  if (carouselTrack && carouselDots && carouselPrev && carouselNext) {
-    const slides = carouselTrack.querySelectorAll('.carousel-slide');
-    let current  = 0;
+  if (carouselTrack && galleryCarousel) {
+    const originalSlides = Array.prototype.slice.call(
+      carouselTrack.querySelectorAll('.carousel-slide')
+    );
 
-    slides.forEach(function (_, i) {
-      var dot = document.createElement('button');
-      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-      dot.setAttribute('aria-label', 'Ir a imagen ' + (i + 1));
-      dot.addEventListener('click', function () { goTo(i); });
-      carouselDots.appendChild(dot);
+    originalSlides.forEach(function (slide) {
+      const clone = slide.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      carouselTrack.appendChild(clone);
     });
 
-    function goTo(index) {
-      current = (index + slides.length) % slides.length;
-      carouselTrack.style.transform = 'translateX(-' + (current * 100) + '%)';
-      carouselDots.querySelectorAll('.carousel-dot').forEach(function (d, i) {
-        d.classList.toggle('active', i === current);
-      });
-    }
+    carouselTrack.classList.add('is-infinite');
+    galleryCarousel.classList.add('is-auto');
+  }
 
-    carouselPrev.addEventListener('click', function () { goTo(current - 1); });
-    carouselNext.addEventListener('click', function () { goTo(current + 1); });
+
+  /* 
+     6.1. Procedimientos accesibles con Tab
+     Permite que cada tarjeta del catálogo reciba foco con teclado.
+  ============================================================ */
+  const procedureCards = document.querySelectorAll('#procedimientos .card');
+
+  procedureCards.forEach(function (card) {
+    card.setAttribute('tabindex', '0');
+  });
+
+
+  /* 
+     6.2. Botón flotante subir/bajar
+     Si está arriba, lleva al footer. Si el usuario bajó, vuelve al inicio.
+  ============================================================ */
+  const scrollJumpToggle = document.getElementById('scrollJumpToggle');
+  const footer = document.querySelector('.site-footer');
+
+  function updateScrollJumpButton() {
+    if (!scrollJumpToggle) return;
+
+    const nearTop = window.scrollY < 160;
+    scrollJumpToggle.setAttribute(
+      'aria-label',
+      nearTop ? 'Ir al final de la página' : 'Volver al inicio de la página'
+    );
+    scrollJumpToggle.setAttribute(
+      'title',
+      nearTop ? 'Ir al final' : 'Volver al inicio'
+    );
+
+    const arrow = scrollJumpToggle.querySelector('.scroll-jump-arrow');
+    if (arrow) arrow.textContent = nearTop ? '↓' : '↑';
+  }
+
+  if (scrollJumpToggle) {
+    updateScrollJumpButton();
+    window.addEventListener('scroll', updateScrollJumpButton);
+
+    scrollJumpToggle.addEventListener('click', function () {
+      if (window.scrollY < 160 && footer) {
+        footer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        footer.setAttribute('tabindex', '-1');
+        footer.focus({ preventScroll: true });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        const mainStart = document.getElementById('inicio') || document.body;
+        if (mainStart && mainStart.focus) {
+          mainStart.setAttribute('tabindex', '-1');
+          mainStart.focus({ preventScroll: true });
+        }
+      }
+    });
   }
 
 

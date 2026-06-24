@@ -93,9 +93,7 @@
           <li><a class="nav-link" href="#procedimientos">Procedimientos</a></li>
           <li><a class="nav-link" href="#cursos">Cursos</a></li>
           <li><a class="nav-link" href="#contacto">Contacto</a></li>
-          <!-- Botón toggle de tema: slider visual tipo interruptor.
-               El JS sigue escuchando el clic en #themeToggle.
-               El CSS mueve el thumb cuando body tiene clase 'dark-mode'. -->
+          <!-- Botón circular de tema oscuro -->
           <li class="nav-theme-li">
             <button
               id="themeToggle"
@@ -103,10 +101,12 @@
               aria-label="Cambiar tema claro u oscuro"
               title="Cambiar tema"
             >
-              <!-- Track (pista oval) + Thumb (círculo deslizante) -->
-              <span class="theme-toggle-track" aria-hidden="true">
-                <span class="theme-toggle-thumb"></span>
-              </span>
+              <img
+                src="assets/icons/dark-mode.svg"
+                alt=""
+                aria-hidden="true"
+                class="theme-icon"
+              />
             </button>
           </li>
         </ul>
@@ -579,7 +579,7 @@
                   class="card-img"
                   decoding="async"
                   loading="lazy"
-                  src="assets/img/depilacion-laser.jpg"
+                  src="assets/img/depilacionlaser.webp"
                 />
               </div>
               <div class="card-body">
@@ -589,7 +589,7 @@
                   efectiva. Resultados visibles desde la primera sesión.
                 </p>
                 <div class="card-price">
-                  <span class="price">Consultar precio</span>
+                  <span class="price">₡45.000</span>
                 </div>
               </div>
             </article>
@@ -605,7 +605,7 @@
                   class="card-img"
                   decoding="async"
                   loading="lazy"
-                  src="assets/img/remocion-laser.jpg"
+                  src="assets/img/remocionlaser.webp"
                 />
               </div>
               <div class="card-body">
@@ -615,7 +615,7 @@
                   tatuadas. Proceso profesional y controlado.
                 </p>
                 <div class="card-price">
-                  <span class="price">Consultar precio</span>
+                  <span class="price">₡15.000</span>
                 </div>
               </div>
             </article>
@@ -1396,12 +1396,22 @@
       title="Accesibilidad"
       type="button"
     >
-      <!-- Ícono de figura humana dentro de un círculo (símbolo universal de accesibilidad) -->
-      <svg aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
-        <path
-          d="M12 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm9 7.5-5.5 1v3.2l3.1 6.4-1.8.9-2.8-5.8-2-1.1v3.4l2 4.9-1.9.7-2-5h-.2l-2 5-1.9-.7 2-4.9v-3.4l-2 1.1-2.8 5.8-1.8-.9 3.1-6.4V10.5L3 9.5 3.4 7.6 9 8.8c1.9.5 4.1.5 6 0l5.6-1.2.4 1.9z"
-        ></path>
-      </svg>
+      <img
+        src="assets/icons/accessibility.svg"
+        alt=""
+        aria-hidden="true"
+        class="a11y-fab-icon"
+      />
+    </button>
+
+    <button
+      aria-label="Ir al final de la página"
+      class="scroll-jump-fab"
+      id="scrollJumpToggle"
+      title="Ir al final"
+      type="button"
+    >
+      <span aria-hidden="true" class="scroll-jump-arrow">↓</span>
     </button>
 
     <section
